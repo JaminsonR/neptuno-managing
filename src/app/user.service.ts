@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { USERS } from './mock-users'
 import { User } from './user';
 import { Response } from './response';
 import { Observable, of } from 'rxjs';
@@ -15,14 +14,20 @@ export class UserService {
 	constructor(
     private http: HttpClient) { }
 
-  	/** GET heroes from the server */
+  	/** GET user from the server */
 	getUsers (): Observable<Response> {
 	  return this.http.get<Response>(this.usersUrl)
 	}
 
-	/** PUT: update the hero on the server */
+	/** POST: create the user on the server */
 	updateUser (user: User): Observable<any> {
 	  return this.http.post(this.usersRegistroUrl, user);
+	}
+
+
+	/** PUT: login the user on the server */
+	loginUser (user: User): Observable<any> {
+	  return this.http.post(this.usersUrl, user);
 	}
 
 }

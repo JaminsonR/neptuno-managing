@@ -3,15 +3,13 @@ import { User } from '../User'
 import { UserService } from '../user.service';
 import { Location } from '@angular/common';
 
-
 @Component({
-  selector: 'app-registro',
-  templateUrl: './registro.component.html',
-  styleUrls: ['./registro.component.css']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class RegistroComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
-  users: User[] ;
   user: User = {
     "id" : "",
     "password" : "",
@@ -22,26 +20,23 @@ export class RegistroComponent implements OnInit {
 	};
   constructor(private userService: UserService, private location: Location) { }
 
-  goBack(): void {
-  this.location.back();
-}
 
-  save(): void {
-   this.userService.updateUser(this.user)
-     .subscribe(() => this.goBack());
- }
-
-  getUsers(): void {
-  	this.userService.getUsers()
+  login(): void {
+  	this.userService.loginUser(this.user)
   	.subscribe(response => {
-  		console.log(response.data as User[])
-  		this.users = response.data as User[];
+  		if (response.status === 'success'){
+  			this.location.go('/registro');
+  			window.location.reload();
+  		} else{
+  			window.location.reload();
+  		}
+  		
   	});
   }
 
 
   ngOnInit() {
-  	this.getUsers();
+  	
   }
 
 }
