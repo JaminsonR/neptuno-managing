@@ -1,0 +1,43 @@
+<h1>Registro</h1>
+
+<div class=container>
+	<h2>Usuarios Registrados:</h2>
+	<ul class="users">
+	  <li *ngFor="let user of users">
+	    <span class="badge">{{user.first_name}} {{user.family_name}}</span> 
+	  </li>
+	</ul>
+</div>
+
+<div>
+  <label>Cedula:
+    <input [(ngModel)]="user.id" placeholder="Numero de cedula">
+  </label>
+</div>
+<div>
+  <label>Password:
+    <input [(ngModel)]="user.password" placeholder="password">
+  </label>
+</div>
+<div>
+  <label>Primer Nombre:
+    <input [(ngModel)]="user.first_name" placeholder="Primer Nombre">
+  </label>
+</div>
+<div>
+  <label>Segundo Nombre:
+    <input [(ngModel)]="user.middle_name" placeholder="Segundo Nombre">
+  </label>
+</div>
+<div>
+  <label>Primer Apellido:
+    <input [(ngModel)]="user.family_name" placeholder="Primer Apellido">
+  </label>
+</div>
+<div>
+  <label>Segundo Apellido:
+    <input [(ngModel)]="user.last_name" placeholder="Segundo Apellido">
+  </label>
+</div>
+
+<button (click)="save()">save</button>
