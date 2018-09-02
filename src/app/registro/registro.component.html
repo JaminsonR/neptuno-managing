@@ -1,43 +1,60 @@
-<h1>Registro</h1>
+<div class="container">
+  <div class="card z-depth-1">
+    <h2>Registro</h2>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input [(ngModel)]="user.first_name" name="user.first_name" type="text" class="validate">
+            <label>Primer nombre</label>
+          </div>
+          <div class="input-field col s6">
+            <input [(ngModel)]="user.middle_name" name="user.middle_name" type="text" class="validate">
+            <label >Segundo nombre</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="family_name" [(ngModel)]="user.family_name" name="user.family_name" type="text" class="validate">
+            <label for="user.family_name">Primer apellido</label>
+          </div>
+          <div class="input-field col s6">
+            <input [(ngModel)]="user.last_name" name="user.last_name" type="text" class="validate">
+            <label >Segundo apellido</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input [(ngModel)]="user.id" name="user.id" type="text" class="validate">
+            <label >Numero de cedula</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="email" [(ngModel)]="user.email" name="user.email" type="email" class="validate">
+            <label for="email">Email</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input [(ngModel)]="user.password" name="user.password" type="password" class="validate">
+            <label >Password</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s1 offset-s5">
+            <button class="waves-effect waves-light black btn" (click)="save()">save</button> 
+          </div>
+        </div>
+      </form>
+    </div>  
+  </div>
 
-<div class=container>
-	<h2>Usuarios Registrados:</h2>
-	<ul class="users">
-	  <li *ngFor="let user of users">
-	    <span class="badge">{{user.first_name}} {{user.family_name}}</span> 
-	  </li>
-	</ul>
-</div>
+    <div class=container>
+    <h2>Usuarios Registrados:</h2>
+    <ul class="users">
+      <li *ngFor="let user of users">
+        <span class="badge">{{user.first_name}} {{user.family_name}}</span> 
+      </li>
+    </ul>
+  </div>
 
-<div>
-  <label>Cedula:
-    <input [(ngModel)]="user.id" placeholder="Numero de cedula">
-  </label>
 </div>
-<div>
-  <label>Password:
-    <input [(ngModel)]="user.password" placeholder="password">
-  </label>
-</div>
-<div>
-  <label>Primer Nombre:
-    <input [(ngModel)]="user.first_name" placeholder="Primer Nombre">
-  </label>
-</div>
-<div>
-  <label>Segundo Nombre:
-    <input [(ngModel)]="user.middle_name" placeholder="Segundo Nombre">
-  </label>
-</div>
-<div>
-  <label>Primer Apellido:
-    <input [(ngModel)]="user.family_name" placeholder="Primer Apellido">
-  </label>
-</div>
-<div>
-  <label>Segundo Apellido:
-    <input [(ngModel)]="user.last_name" placeholder="Segundo Apellido">
-  </label>
-</div>
-
-<button (click)="save()">save</button>

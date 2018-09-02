@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from './user';
+import { User } from './models/user';
 import { Response } from './response';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class AuthenticationService {
 	private usersUrl = '/api/user/login';  // URL to web api
 	private usersRegistroUrl = '/api/user/registro';
 
@@ -25,10 +25,14 @@ export class UserService {
 	}
 
 
-	/** PUT: login the user on the server */
+	/**login the user on the server */
 	loginUser (user: User): Observable<any> {
 	  return this.http.post(this.usersUrl, user);
 	}
 
+	/** Authenticate user */
+	isAuthenticated() {}
+
 }
+
 

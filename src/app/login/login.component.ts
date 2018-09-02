@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../User'
-import { UserService } from '../user.service';
+import { User } from '../models/User'
+import { AuthenticationService } from '../authentication.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -16,13 +16,14 @@ export class LoginComponent implements OnInit {
     "first_name" : "",
     "middle_name" : "",
     "family_name" : "",
-    "last_name" : ""
+    "last_name" : "",
+    "email" : ""
 	};
-  constructor(private userService: UserService, private location: Location) { }
+  constructor(private authenticationService: AuthenticationService, private location: Location) { }
 
 
   login(): void {
-  	this.userService.loginUser(this.user)
+  	this.authenticationService.loginUser(this.user)
   	.subscribe(response => {
   		if (response.status === 'success'){
   			this.location.go('/registro');

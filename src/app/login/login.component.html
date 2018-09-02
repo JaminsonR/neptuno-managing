@@ -1,15 +1,25 @@
-<div class="text-align-center">
-	<img width="150" alt="Neptuno Logo" src="../assets/neptuno_logo.jpeg">
+<div class="container text-align-center">
+	<div class="container login z-depth-5 ">
+		<img width="150" alt="Neptuno Logo" src="../assets/neptuno_logo.jpeg">
+		<form>
+			<div class="row">
+				<div class="input-field col s8 offset-s2">
+				  <input [(ngModel)]="user.id" name="user.id" type="text" class="validate">
+		          <label for="user.id">Cedula</label>
 
-	<div>
-	  <label>Cedula:
-	    <input [(ngModel)]="user.id" placeholder="Numero de cedula">
-	  </label>
+				</div>
+			</div >
+			<div class="row">
+				<div class="input-field col s8 offset-s2">
+					<input [(ngModel)]="user.password" name="user.password" type="password" class="validate">
+		          	<label>Password</label>
+				</div>
+			</div>
+			<div class="row">
+		        <div class="col s2 offset-s5">
+		          <button class="waves-effect waves-light black btn" (click)="login()">Login</button> 
+		        </div>
+		    </div>
+		</form>
 	</div>
-	<div>
-	  <label>Password:
-	    <input type="password" [(ngModel)]="user.password" placeholder="password">
-	  </label>
-	</div>
-	<button (click)="login()">Login</button>
 </div>

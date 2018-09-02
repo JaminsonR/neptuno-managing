@@ -1,13 +1,17 @@
 <div>
-	<nav>
-  <a routerLink="/registro">Usuarios Registrados</a>
-</nav>
+	<nav class= "nav-extended #000000 black">
+		<div class="nav-wrapper">
+			<a href="#" class="brand-logo"><img class="neptuno_letters_black" width="180" alt="Neptuno Logo" src="../assets/neptuno_letters_black.jpeg"></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+		        <li class="waves-effect waves-light"><a routerLink="/registro">Usuarios Registrados</a></li>
+		        <li class="waves-effect waves-light"><a href="#">Inventario</a></li>
+		        <li class="waves-effect waves-light"><a href="#">Ventas</a></li>
+	      	</ul>
+  		</div>
+	</nav>
 </div>
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="text-align-center">
-  <h1>
-    {{ title }}!
-  </h1>
 </div>
 
 <router-outlet></router-outlet>

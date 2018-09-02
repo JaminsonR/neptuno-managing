@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../User'
-import { UserService } from '../user.service';
+import { User } from '../models/User'
+import { AuthenticationService } from '../authentication.service';
 import { Location } from '@angular/common';
 
 
@@ -18,21 +18,22 @@ export class RegistroComponent implements OnInit {
     "first_name" : "",
     "middle_name" : "",
     "family_name" : "",
-    "last_name" : ""
+    "last_name" : "",
+    "email" : ""
 	};
-  constructor(private userService: UserService, private location: Location) { }
+  constructor(private authenticationService: AuthenticationService, private location: Location) { }
 
   goBack(): void {
   this.location.back();
 }
 
   save(): void {
-   this.userService.updateUser(this.user)
+   this.authenticationService.updateUser(this.user)
      .subscribe(() => this.goBack());
  }
 
   getUsers(): void {
-  	this.userService.getUsers()
+  	this.authenticationService.getUsers()
   	.subscribe(response => {
   		console.log(response.data as User[])
   		this.users = response.data as User[];
