@@ -2,6 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Big } from 'big.js';
 import * as moment from 'moment';
 import { Sale } from '../models/Sale';
+import { Item } from '../models/Item';
 
 @Component({
   selector: 'app-venta',
@@ -40,14 +41,12 @@ sale : Sale =
 
 add_row = function ()
 {
-	this.sale.items.push(
-		 {
-            "quantity" : 0,
-            "product_id" : "",
-            "product_name" : "",
-            "price" : new Big("0.00"),
-            "amount" : new Big("0.00")
-        });	
+	if (this.sale.items[this.sale.items.length -1 ].quantity > 0)
+	{
+		this.sale.items.push(new Item());	
+	}
+
+	
 }
   constructor() { }
 
