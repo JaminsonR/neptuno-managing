@@ -11,10 +11,11 @@ import { Item } from '../models/Item';
 })
 export class VentaComponent implements OnInit {
 
+
 sale : Sale = 
 {
     "client_id" : "0912345685001",
-    "date" : moment("2018-04-18T16:31:10.000Z"),
+    "date" : new Date("2018-04-18T16:31:10.000Z"),
     "client_name" : "Cliente A",
     "client_phone" : "0969216546",
     "client_address" : "Sauces 4 mz 377 v12",
@@ -38,6 +39,7 @@ sale : Sale =
     "tax" : new Big("0.444"),
     "total" : new Big("4.114")
 }
+date : string = moment(this.sale.date).format("DD/MM/YYYY")
 
 add_row = function ()
 {
