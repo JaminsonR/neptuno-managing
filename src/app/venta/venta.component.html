@@ -1,0 +1,82 @@
+<div class="container">
+	<div class="card z-depth-1">
+		<div class="row">
+			<div class="col offset-s3">
+    			<h2>Registro de Venta</h2>
+    		</div>
+    	</div>
+    	<div class="row">
+			<div class="input-field col s6">
+	          <input [(ngModel)]="sale.client_id" id="client_id" type="text" class="validate">
+	          <label for="client_id">Id del cliente</label>
+	        </div>
+	        <div class="input-field col s6">
+	          <input disabled [(ngModel)]="sale.date" id="purchase_date" type="text" class="validate">
+	          <label for="purchase_date">Fecha</label>
+	        </div>
+        </div>
+        <div class="row">
+        	<div class="input-field col s6">
+	          <input disabled [(ngModel)]="sale.client_name" id="client_name" type="text" class="validate">
+	          <label for="client_name">Nombre</label>
+	      	</div>
+	        <div class="input-field col s6">
+	          <input disabled [(ngModel)]="sale.client_phone" id="client_phone" type="text" class="validate">
+	          <label for="client_phone">Celular</label>
+	      	</div>
+	      	<div class="input-field col s6">
+	          <input disabled [(ngModel)]="sale.client_address" id="client_address" type="text" class="validate">
+	          <label for="client_address">Dirección</label>
+	      	</div>
+        </div>
+
+       <table class="centered responsive-table highlight">
+	        <thead>
+	          <tr>
+	              <th>Cantidad</th>
+	              <th>Codigo del producto</th>
+	              <th>Nombre del producto</th>
+	              <th>PVP</th>
+	              <th>Importe</th>
+	          </tr>
+	        </thead>
+
+	        <tbody>
+	        	 <tr *ngFor="let item of sale.items">
+		            <td> {{item.quantity}}</td>
+		            <td> {{item.product_id}}</td>
+		            <td> {{item.product_name}}</td>
+		            <td> {{item.price}}</td>
+		            <td> {{item.amount}}</td>
+	         	</tr>
+	        </tbody>
+
+    	</table>
+    
+	    	<div class="row">
+	    		<div class="col offset-s10 s1">
+	    			<h6><b>Subtotal:</b></h6>
+	    		</div>
+	    		<div class="col s1">
+	    			<h6>{{sale.subtotal}}</h6>
+	    		</div>
+	    		<div class="col offset-s10 s1">
+	    			<h6><b>IVA:</b></h6>
+	    		</div>
+	    		<div class="col s1">
+	    			<h6>{{sale.tax}}</h6>
+	    		</div>
+	    		<div class="col offset-s10 s1">
+	    			<h6><b>Total:</b></h6>
+	    		</div>
+	    		<div class="col s1">
+	    			<h6>{{sale.total}}</h6>
+	    		</div>
+	    		<div class="col offset-s5 s3">
+	    			<button class="waves-effect waves-light black btn" (click)="save()">Guardar venta</button> 
+	    		</div>
+	    	</div>
+
+
+	</div>
+</div>
