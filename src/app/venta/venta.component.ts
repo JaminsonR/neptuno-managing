@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Big } from 'big.js';
 import * as moment from 'moment';
 import { Sale } from '../models/Sale';
@@ -36,6 +36,18 @@ sale : Sale =
     "subtotal" : new Big("3.70"),
     "tax" : new Big("0.444"),
     "total" : new Big("4.114")
+}
+
+add_row = function ()
+{
+	this.sale.items.push(
+		 {
+            "quantity" : 0,
+            "product_id" : "",
+            "product_name" : "",
+            "price" : new Big("0.00"),
+            "amount" : new Big("0.00")
+        });	
 }
   constructor() { }
 

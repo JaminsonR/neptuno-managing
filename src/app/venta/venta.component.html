@@ -30,7 +30,7 @@
 	      	</div>
         </div>
 
-       <table class="centered responsive-table highlight">
+       <table class="centered responsive-table highlight striped">
 	        <thead>
 	          <tr>
 	              <th>Cantidad</th>
@@ -38,35 +38,35 @@
 	              <th>Nombre del producto</th>
 	              <th>PVP</th>
 	              <th>Importe</th>
+	              <a class="btn-floating btn-small waves-effect waves-light black" (click)="add_row()"><i class="material-icons">add</i></a>
 	          </tr>
 	        </thead>
 
 	        <tbody>
-	        	 <tr *ngFor="let item of sale.items">
-		            <td> {{item.quantity}}</td>
-		            <td> {{item.product_id}}</td>
+	        	 <tr *ngFor="let item of sale.items ; index as i">
+		            <td [textContent]="sale.items[i].quantity" (blur)="sale.items[i].quantity=$event.target.innerText" contenteditable="true"></td>
+		            <td [textContent]="sale.items[i].product_id" (blur)="sale.items[i].product_id=$event.target.innerText" contenteditable="true" contenteditable="true"></td>
 		            <td> {{item.product_name}}</td>
 		            <td> {{item.price}}</td>
 		            <td> {{item.amount}}</td>
 	         	</tr>
 	        </tbody>
-
     	</table>
     
 	    	<div class="row">
-	    		<div class="col offset-s10 s1">
+	    		<div class="col offset-s9 s1">
 	    			<h6><b>Subtotal:</b></h6>
 	    		</div>
 	    		<div class="col s1">
 	    			<h6>{{sale.subtotal}}</h6>
 	    		</div>
-	    		<div class="col offset-s10 s1">
+	    		<div class="col offset-s9 s1">
 	    			<h6><b>IVA:</b></h6>
 	    		</div>
 	    		<div class="col s1">
 	    			<h6>{{sale.tax}}</h6>
 	    		</div>
-	    		<div class="col offset-s10 s1">
+	    		<div class="col offset-s9 s1">
 	    			<h6><b>Total:</b></h6>
 	    		</div>
 	    		<div class="col s1">
