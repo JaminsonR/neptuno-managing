@@ -73,10 +73,20 @@
 	    			<h6>{{sale.total}}</h6>
 	    		</div>
 	    		<div class="col offset-s5 s3">
-	    			<button class="waves-effect waves-light black btn" (click)="save()">Guardar venta</button> 
+
+	    			<button class="waves-effect waves-light black btn modal-trigger" data-target="savesuccessModal" (click)="save() " modal >Guardar venta</button> 
 	    		</div>
 	    	</div>
 
-
+	    	<div id="savesuccessModal" class="modal dismissible">
+				<div class="modal-content">
+					 <div class="row">
+					      <div class="offset-s3 col s9"><h4>Venta Guardada Exitosamente</h4></div>
+					      <div class="offset-s5 col s2 acceptButton"><button class="waves-effect centered waves-light black btn modal-close">Continuar</button></div>
+					      
+					    </div>
+					
+				</div>
+			</div>
 	</div>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/User'
-import { AuthenticationService } from '../authentication.service';
+import { AuthenticationService } from '../services/authenticationService/authentication.service';
 import { Location } from '@angular/common';
 
 
@@ -28,7 +28,7 @@ export class RegistroComponent implements OnInit {
 }
 
   save(): void {
-   this.authenticationService.updateUser(this.user)
+   this.authenticationService.createUser(this.user)
      .subscribe(() => this.goBack());
  }
 
