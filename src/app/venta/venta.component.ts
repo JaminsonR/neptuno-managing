@@ -18,7 +18,7 @@ export class VentaComponent implements OnInit {
 	{
 	    "client_id" : "0912345685001",
 	    "date" : new Date(),
-	    "client_name" : "Cliente A",
+	    "client_name" : "Cliente B",
 	    "client_phone" : "0969216546",
 	    "client_address" : "Sauces 4 mz 377 v12",
 	    "items" : [ 

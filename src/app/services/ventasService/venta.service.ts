@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 })
 export class VentaService {
 	private baseUrl = environment.baseUrl; // URL to web api
-	private salessUrl = '/api/sale';  
+	private salessUrl = '/api/sales';  
 
 	constructor(
     private http: HttpClient) { }
