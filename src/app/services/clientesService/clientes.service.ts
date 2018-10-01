@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Sale } from '../../models/Sale';
+import { Client } from '../../models/Client';
 import { Response } from '../../models/response';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -8,21 +8,21 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class VentaService {
+export class ClientesService {
 	private baseUrl = environment.baseUrl; // URL to web api
-	private salesUrl = this.baseUrl + 'sales';  
+	private clientUrl = this.baseUrl + 'clients';  
 
 	constructor(
     private http: HttpClient) { }
 
   	/** GET sales from the server */
-	getSales (): Observable<Response> { 
-	  return this.http.get<Response>(this.salesUrl)
+	getClients (): Observable<Response> { 
+	  return this.http.get<Response>(this.clientUrl)
 	}
 
-	/** POST: create new sale on the server */
-	createSale (sale: Sale): Observable<any> {
-	  return this.http.post(this.salesUrl, sale);
+	/** POST: create new client on the server */
+	createClient (client: Client): Observable<any> {
+	  return this.http.post(this.clientUrl, client);
 	}
 }
 

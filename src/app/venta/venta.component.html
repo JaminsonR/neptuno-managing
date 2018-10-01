@@ -7,7 +7,7 @@
     	</div>
     	<div class="row">
 			<div class="input-field col s6">
-	          <input [(ngModel)]="sale.client_id" id="client_id" type="text" class="validate">
+	          <input [(ngModel)]="sale.client_id" id="client_id" type="text" class="validate" (blur)="clientLookUp($event) ">
 	          <label for="client_id">Id del cliente</label>
 	        </div>
 	        <div class="input-field col s6">
@@ -44,11 +44,11 @@
 
 	        <tbody>
 	        	 <tr *ngFor="let item of sale.items ; index as i">
-		            <td [textContent]="sale.items[i].quantity" (blur)="sale.items[i].quantity=$event.target.innerText" contenteditable="true"></td>
-		            <td [textContent]="sale.items[i].product_id" (blur)="sale.items[i].product_id=$event.target.innerText" contenteditable="true" contenteditable="true"></td>
+		            <td [textContent]="sale.items[i].quantity" (blur)="updateAmount($event, i)" contenteditable="true"></td>
+		            <td [textContent]="sale.items[i].product_id" (blur)="productLookUp($event, i)" contenteditable="true" contenteditable="true"></td>
 		            <td> {{item.product_name}}</td>
-		            <td> {{item.price}}</td>
-		            <td> {{item.amount}}</td>
+		            <td> {{item.price | currency}}</td>
+		            <td> {{item.amount  | currency}}</td>
 	         	</tr>
 	        </tbody>
     	</table>
@@ -58,30 +58,30 @@
 	    			<h6><b>Subtotal:</b></h6>
 	    		</div>
 	    		<div class="col s1">
-	    			<h6>{{sale.subtotal}}</h6>
+	    			<h6>{{sale.subtotal | currency}}</h6>
 	    		</div>
 	    		<div class="col offset-s9 s1">
 	    			<h6><b>IVA:</b></h6>
 	    		</div>
 	    		<div class="col s1">
-	    			<h6>{{sale.tax}}</h6>
+	    			<h6>{{sale.tax| currency}}</h6>
 	    		</div>
 	    		<div class="col offset-s9 s1">
 	    			<h6><b>Total:</b></h6>
 	    		</div>
 	    		<div class="col s1">
-	    			<h6>{{sale.total}}</h6>
+	    			<h6>{{sale.total | currency}}</h6>
 	    		</div>
 	    		<div class="col offset-s5 s3">
 
-	    			<button class="waves-effect waves-light black btn modal-trigger" data-target="savesuccessModal" (click)="save() " modal >Guardar venta</button> 
+	    			<button class="waves-effect waves-light black btn modal-trigger" data-target="savesuccessModal" (click)="save()" modal >Guardar venta</button> 
 	    		</div>
 	    	</div>
 
 	    	<div id="savesuccessModal" class="modal dismissible">
 				<div class="modal-content">
 					 <div class="row">
-					      <div class="offset-s3 col s9"><h4>Venta Guardada Exitosamente</h4></div>
+					      <div class="col s12 center-align"><h4>{{modalText}}</h4></div>
 					      <div class="offset-s5 col s2 acceptButton"><button class="waves-effect centered waves-light black btn modal-close">Continuar</button></div>
 					      
 					    </div>

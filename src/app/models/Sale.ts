@@ -1,6 +1,3 @@
-import { Big } from 'big.js';
-
-
 import { Item } from './Item';
 
 export class Sale {
@@ -10,7 +7,7 @@ export class Sale {
      client_phone  :  string  ;
      client_address  :  string ;
      items  : Item[] ;
-     subtotal  : Big ;
-     tax  : Big ;
-     total  : Big;
+     subtotal  : number ;
+     tax  : number ;
+     total  : number;
 }
