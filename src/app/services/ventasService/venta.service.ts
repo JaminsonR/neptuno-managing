@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 })
 export class VentaService {
 	private baseUrl = environment.baseUrl; // URL to web api
-	private salesUrl = this.baseUrl + 'sales';  
+	private salesUrl = this.baseUrl + 'sales/';  
 
 	constructor(
     private http: HttpClient) { }
@@ -19,6 +19,12 @@ export class VentaService {
 	getSales (): Observable<Response> { 
 	  return this.http.get<Response>(this.salesUrl)
 	}
+
+	/** GET sale from the server */
+	getSale (id: string): Observable<any> { 
+	  return this.http.get<Response>(this.salesUrl + id)
+	}
+
 
 	/** POST: create new sale on the server */
 	createSale (sale: Sale): Observable<any> {
