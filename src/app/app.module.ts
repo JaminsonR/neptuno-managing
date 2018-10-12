@@ -15,7 +15,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule,MatFormFieldModule,MatCheckboxModule,MatButtonModule,MatToolbarModule,MatIconModule,MatMenuModule,MatProgressSpinnerModule,MatCardModule, } from '@angular/material';
 import { DetalleVentaComponent } from './detalle-venta/detalle-venta.component';
 import {MatDialogModule} from '@angular/material/dialog';
-
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { NavbarComponent } from './navbar/navbar.component';
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     LoginComponent,
     VentaComponent,
     ResumenVentasComponent,
-    DetalleVentaComponent
+    DetalleVentaComponent,
+    NavbarComponent
   ],
   imports: [
   MaterializeModule,
@@ -43,7 +46,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSidenavModule,
+    MatListModule
     
   ],
   providers: [],

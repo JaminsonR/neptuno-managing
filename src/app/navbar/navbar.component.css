@@ -1,0 +1,49 @@
+div.row a{
+	transition: background-color .3s;
+    font-size: 1rem;
+    color: #fff;
+    
+    padding: 0 15px;
+    cursor: pointer;
+    text-decoration-style: none;
+    color: white;
+    
+}
+
+div.row a:focus{
+    outline: none;
+
+}
+
+div.row a: hover{
+	color: #312a2a;
+}
+
+div div.col{
+	padding: 3%;
+	padding-left: 15%;
+}
+
+div.row{
+	margin-left: 0 !important;
+	width: 100%;
+
+}
+
+.mat-drawer {
+    background-color: black;
+    width: 50%;
+
+
+   
+}
+
+ul:not(.browser-default) > li {
+    list-style-type: disc;
+}
+
+hr{
+	color: white;
+	margin: 1%;
+	margin-bottom: 3%;
+}

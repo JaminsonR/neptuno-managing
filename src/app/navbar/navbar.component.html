@@ -1,0 +1,40 @@
+<div>
+	<nav class= "nav-extended #000000 black">
+		<div class="nav-wrapper">
+			<i (click)="sidenav.toggle()"  (click)="icon()" class="material-icons left hide-on-large-only">menu</i>
+			<a href="#" class="brand-logo"><img class="neptuno_letters_black" width="180" alt="Neptuno Logo" *ngIf="show" src="../assets/neptuno_letters_black.jpeg"></a>
+			 
+
+
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+		        <li class="waves-effect waves-light"><a routerLink="/registro">Usuarios Registrados</a></li>
+		        <li class="waves-effect waves-light"><a href="#">Inventario</a></li>
+		        <li class="waves-effect waves-light"><a routerLink="/resumen_ventas">Ventas</a></li>
+	      	</ul>
+  		</div>
+	</nav>
+
+<div class="text-align-center">
+</div>
+
+
+
+<mat-sidenav #sidenav mode="side" class= "z-depth-5">
+	<nav class= "nav-extended #000000 black">
+		<div class="nav-wrapper">
+			<i (click)="sidenav.toggle()"  (blur)="sidenav.toggle()" (click)="icon()" class="material-icons left hide-on-large-only">menu</i>
+			<a href="#" class="brand-logo"><img class="neptuno_letters_black" width="180" alt="Neptuno Logo" src="../assets/neptuno_letters_black.jpeg"></a>
+  		</div>
+	</nav>
+
+
+	<div class= "container row black">
+		<a routerLink="/registro"><div class="col s12">Usuarios Registrados</div></a>
+
+		<a href="#"><div class="col s12">Inventario</div></a>
+
+		<a routerLink="/resumen_ventas"><div class="col s12">Ventas</div></a>
+
+	</div>
+</mat-sidenav>
+
