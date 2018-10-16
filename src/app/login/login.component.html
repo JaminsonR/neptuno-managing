@@ -4,20 +4,20 @@
 		<form>
 			<div class="row">
 				<div class="input-field col s8 offset-s2">
-				  <input [(ngModel)]="user.id" name="user.id" type="text" class="validate">
+				  <input [(ngModel)]="id" name="user.id" type="text" class="validate">
 		          <label for="user.id">Cedula</label>
 
 				</div>
 			</div >
 			<div class="row">
 				<div class="input-field col s8 offset-s2">
-					<input [(ngModel)]="user.password" name="user.password" type="password" class="validate">
+					<input [(ngModel)]="password" name="user.password" type="password" class="validate">
 		          	<label>Password</label>
 				</div>
 			</div>
 			<div class="row">
 		        <div class="col s2 offset-s5">
-		          <button class="waves-effect waves-light black btn" (click)="login()">Login</button> 
+		          <button class="waves-effect waves-light black btn" (click)="login()">Login</button>
 		        </div>
 		    </div>
 		</form>

@@ -9,35 +9,30 @@ import { Location } from '@angular/common';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  public id: String
+  public password: String
 
-  user: User = {
-    "id" : "",
-    "password" : "",
-    "first_name" : "",
-    "middle_name" : "",
-    "family_name" : "",
-    "last_name" : "",
-    "email" : ""
-	};
   constructor(private authenticationService: AuthenticationService, private location: Location) { }
 
 
   login(): void {
-  	this.authenticationService.loginUser(this.user)
+  	this.authenticationService.loginUser(this.id, this.password)
   	.subscribe(response => {
-  		if (response.status === 'success'){
-  			this.location.go('/registro');
-  			window.location.reload();
-  		} else{
-  			window.location.reload();
-  		}
-  		
-  	});
+      console.log(response)
+      if (response.estado) {
+        localStorage.setItem('token', response.datos)
+        this.location.go('/registro')
+        window.location.reload()
+      } else {
+        // window.location.reload();
+        // mostrar mensaje de error
+      }
+  	})
   }
 
 
   ngOnInit() {
-  	
+
   }
 
 }

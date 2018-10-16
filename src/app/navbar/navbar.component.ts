@@ -9,6 +9,10 @@ export class NavbarComponent implements OnInit {
 
   constructor() { }
 
+  salir(): void {
+    localStorage.clear()
+  }
+
   show: boolean = true;
 
   icon(): void {

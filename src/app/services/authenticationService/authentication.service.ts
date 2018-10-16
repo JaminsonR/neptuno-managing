@@ -3,21 +3,26 @@ import { User } from '../../models/User';
 import { Response } from '../../models/response';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Http , HttpModule} from '@angular/http';
 import { environment } from '../../../environments/environment';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 	private baseUrl = environment.baseUrl; // URL to web api
-	private usersUrl = this.baseUrl + 'user/';  
+	private usersUrl = this.baseUrl + 'user/';
+  private loginUrl = this.baseUrl + 'login/auth'
 
 
 	constructor(
-    private http: HttpClient) { }
+    private http: HttpClient,
+    public jwtHelper: JwtHelperService
+    ) { }
 
   	/** GET users from the server */
-	getUsers (): Observable<Response> { 
+	getUsers (): Observable<Response> {
 	  return this.http.get<Response>(this.usersUrl)
 	}
 
@@ -29,12 +34,15 @@ export class AuthenticationService {
 
 
 	/** POST: login the user on the server */
-	loginUser (user: User): Observable<any> {
-	  return this.http.post(this.usersUrl, user);
+	loginUser (id: String, password: String): Observable<any> {
+	  return this.http.post(this.loginUrl, { id, password });
 	}
 
 	/** Authenticate user */
-	isAuthenticated() {}
+	isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    return !this.jwtHelper.isTokenExpired(token);
+  }
 
 }
 
