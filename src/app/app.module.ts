@@ -40,7 +40,7 @@ export function getToken() {
       config: {
         tokenGetter: getToken
       }
-    })
+    }),
     MaterializeModule,
     BrowserModule,
     HttpModule,
