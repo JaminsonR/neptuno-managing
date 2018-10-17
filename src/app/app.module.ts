@@ -20,9 +20,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { NavbarComponent } from './navbar/navbar.component';
 import {MatListModule} from '@angular/material/list';
 import { JwtModule } from '@auth0/angular-jwt';
-
+import { AuthRequestOptions } from './_guads/auth-request';
 export function getToken() {
-  return localStorage.getItem('token')
+  return localStorage.getItem('token');
 }
 
 @NgModule({
@@ -62,7 +62,10 @@ export function getToken() {
     MatListModule
 
   ],
-  providers: [AuthGuard],
+  providers: [
+    AuthGuard,
+    AuthRequestOptions
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

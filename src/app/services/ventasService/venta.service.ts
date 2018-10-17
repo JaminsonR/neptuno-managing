@@ -10,19 +10,24 @@ import { environment } from '../../../environments/environment';
 })
 export class VentaService {
 	private baseUrl = environment.baseUrl; // URL to web api
-	private salesUrl = this.baseUrl + 'sales/';  
+	private salesUrl = this.baseUrl + 'sales/';
 
 	constructor(
     private http: HttpClient) { }
-
-  	/** GET sales from the server */
-	getSales (): Observable<Response> { 
-	  return this.http.get<Response>(this.salesUrl)
+    /** GET sales from the server */
+	getSales (): Observable<Response> {
+    const token = localStorage.getItem('token');
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization': token
+      })
+    };
+	  return this.http.get<Response>(this.salesUrl, options);
 	}
 
 	/** GET sale from the server */
-	getSale (id: string): Observable<any> { 
-	  return this.http.get<Response>(this.salesUrl + id)
+	getSale (id: string): Observable<any> {
+	  return this.http.get<Response>(this.salesUrl + id);
 	}
 
 
