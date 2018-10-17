@@ -16,13 +16,7 @@ export class VentaService {
     private http: HttpClient) { }
     /** GET sales from the server */
 	getSales (): Observable<Response> {
-    const token = localStorage.getItem('token');
-    const options = {
-      headers: new HttpHeaders({
-        'Authorization': token
-      })
-    };
-	  return this.http.get<Response>(this.salesUrl, options);
+	  return this.http.get<Response>(this.salesUrl);
 	}
 
 	/** GET sale from the server */

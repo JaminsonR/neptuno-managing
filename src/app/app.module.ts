@@ -3,8 +3,8 @@ import { Moment } from 'moment';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
-import { HttpClientModule } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpModule, RequestOptions } from '@angular/http';
 import { AuthGuard } from './_guads/auth-guard';
 import { AppComponent } from './app.component';
 import { RegistroComponent } from './registro/registro.component';
@@ -20,7 +20,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { NavbarComponent } from './navbar/navbar.component';
 import {MatListModule} from '@angular/material/list';
 import { JwtModule } from '@auth0/angular-jwt';
-import { AuthRequestOptions } from './_guads/auth-request';
+import { AuthenticationService } from './services/authenticationService/authentication.service';
 export function getToken() {
   return localStorage.getItem('token');
 }
@@ -64,7 +64,11 @@ export function getToken() {
   ],
   providers: [
     AuthGuard,
-    AuthRequestOptions
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

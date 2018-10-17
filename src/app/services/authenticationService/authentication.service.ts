@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
 import { User } from '../../models/User';
 import { Response } from '../../models/response';
 import { Observable, of } from 'rxjs';
@@ -10,7 +11,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthenticationService implements HttpInterceptor{
 	private baseUrl = environment.baseUrl; // URL to web api
 	private usersUrl = this.baseUrl + 'user/';
   private loginUrl = this.baseUrl + 'login/auth'
@@ -42,7 +43,19 @@ export class AuthenticationService {
 	isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
     return !this.jwtHelper.isTokenExpired(token);
+	}
+	
+	/** Adds auth headers to requests */
+	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+		const token = localStorage.getItem('token');		
+		req = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+		});
+		return next.handle(req);
   }
+
 
 }
 
