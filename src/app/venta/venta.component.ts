@@ -29,7 +29,7 @@ export class VentaComponent implements OnInit {
 	{
 		"_id" : undefined,
 	    "client_id" : " ",
-	    "date" : new Date().toString(),
+	    "date" : new Date().toDateString(),
 	    "client_name" : " ",
 	    "client_phone" : " ",
 	    "client_address" : " ",
@@ -90,7 +90,10 @@ export class VentaComponent implements OnInit {
 	}
 
 	save(): void {
-	if (this.sale.client_name != " " && this.sale.items.length > 0 && this.sale.subtotal > 0 && this.sale.status != "" && this.sale.due_date!= "" && new Date(this.sale.due_date).getTime()  >= new Date().getTime() ){
+		console.log(new Date(this.sale.date).getTime())
+		console.log( new Date(this.sale.due_date).getTime())
+		
+	if (this.sale.client_name != " " && this.sale.items.length > 0 && this.sale.subtotal > 0 && this.sale.status != "" && this.sale.due_date!= "" && new Date(this.sale.date).getTime() <= new Date(this.sale.due_date).getTime() ){
 		this.sale.items = this.cleanItems(this.sale.items)
 		this.sale.client_id = this.sale.client_id.replace(/ /g,'')
 		this.ventaService.createSale(this.sale)
