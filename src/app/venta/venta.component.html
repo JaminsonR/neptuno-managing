@@ -36,7 +36,7 @@
 				  <mat-option *ngFor="let status of statuses" [value]="status">{{status}}
 				  </mat-option>
 				</mat-select>
-				<mat-error *ngIf="status==0">Seleccione un estado para esta venta</mat-error>
+				<mat-error *ngIf="sale.status==''">Seleccione un estado para esta venta</mat-error>
 			  </mat-form-field>
 			</div>
 		</div>
