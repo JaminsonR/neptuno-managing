@@ -8,7 +8,7 @@ import { ClientesService } from '../services/clientesService/clientes.service';
 import { ProductosService } from '../services/productosService/producto.service';
 import { Client } from '../models/Client';
 import { Product } from '../models/Product';
-import {MatDialog, MatDialogConfig} from "@angular/material";
+import {MatDialog} from "@angular/material";
 
 
 
@@ -20,7 +20,9 @@ import {MatDialog, MatDialogConfig} from "@angular/material";
 })
 export class VentaComponent implements OnInit {
 
-	@ViewChild('successDialog') successDialog: TemplateRef<any>;
+	@ViewChild('successDialog') successDialog: TemplateRef<any>
+	@ViewChild('failureDialog') failureDialog: TemplateRef<any>
+	@ViewChild('incompleteDialog') incompleteDialog: TemplateRef<any>
 
 	TAX = 0.12
 	sale : Sale = 
@@ -39,23 +41,23 @@ export class VentaComponent implements OnInit {
 	            "price" : 0.00,
 	            "amount" : 0.00
 	        }, 
-	        
 	    ],
 	    "subtotal" : 0.00,
 	    "tax" : 0.00,
-	    "total" : 0.00
+		"total" : 0.00,
+		"status" : 0,
+		"due_date" : " "
 	}
 	date : string = moment(new Date(this.sale.date)).format("DD/MM/YYYY")
 
 	clients : Client[]
 	products : Product[]
 	modalText = ""
-
-	 animal: string;
-  	name: string;
-
-
-
+	statuses: any[] = [
+		{ "id":1, "label": "Por cobrar"},
+		{ "id":2, "label": "Cobrada"},
+		{ "id":3, "label": "Vencida"}
+	]
   constructor(private ventaService: VentaService, private clienteService: ClientesService, private productosService: ProductosService, private dialog: MatDialog) { }
 
 	add_row = function ()
@@ -67,9 +69,9 @@ export class VentaComponent implements OnInit {
 
 		
 	}
-	openDialog() {
-    const dialogConfig = new MatDialogConfig();
-    this.dialog.open(this.successDialog, dialogConfig);
+	openDialog(dialog :TemplateRef <any>) {
+    //const dialogConfig = new MatDialogConfig();
+    this.dialog.open(dialog);
   }
 
 	getClients(): void {
@@ -92,24 +94,35 @@ export class VentaComponent implements OnInit {
 	}
 
 	save(): void {
-	if (this.sale.client_name != " " && this.sale.items.length > 0 && this.sale.subtotal > 0){
+	if (this.sale.client_name != " " && this.sale.items.length > 0 && this.sale.subtotal > 0 && this.sale.status > 0 && this.sale.due_date!= " " && new Date(this.sale.due_date).getTime()  >= new Date().getTime() ){
+		this.sale.items = this.cleanItems(this.sale.items)
+		this.sale.client_id = this.sale.client_id.replace(/ /g,'')
 		this.ventaService.createSale(this.sale)
 	     .subscribe((response) => {
 	     	console.log(response)
-	     	this.openDialog()
 	     	if (response.status === true){
-	     		this.modalText = "Venta Guardada Exitosamente"
+				this.openDialog(this.successDialog)
 	     	}else{
-	     		this.modalText = "No se pudo guardar la venta. Vuelva a intentarlo"
+				this.openDialog(this.failureDialog)
 
-	     	}
+			 }
 	     },
 	     (error) => {
-	     	this.modalText = "No se pudo guardar la venta"
-	 		this.openDialog()});
+			 this.openDialog(this.failureDialog)
+			});
+		return
 	}
-	   this.modalText = "Por favor llene todos los campos"
-	   this.openDialog()
+	   this.openDialog(this.incompleteDialog)
+	 }
+
+	 cleanItems(items: Item[]): Item[] {
+		 let clenseItems : Item[] = []
+		 for (let item of items){
+			if (item.amount > 0){
+				clenseItems.push(item)
+			}
+		 }
+		return clenseItems
 	 }
 
 	clientLookUp(event: any): void {

@@ -13,7 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { VentaComponent } from './venta/venta.component';
 import { ResumenVentasComponent } from './resumen-ventas/resumen-ventas.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule,MatFormFieldModule,MatCheckboxModule,MatButtonModule,MatToolbarModule,MatIconModule,MatMenuModule,MatProgressSpinnerModule,MatCardModule, } from '@angular/material';
+import { MatInputModule,MatFormFieldModule,MatCheckboxModule,MatButtonModule,MatToolbarModule,MatIconModule,MatMenuModule,MatProgressSpinnerModule,MatCardModule, MatNativeDateModule } from '@angular/material';
 import { DetalleVentaComponent } from './detalle-venta/detalle-venta.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -21,6 +21,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import {MatListModule} from '@angular/material/list';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthenticationService } from './services/authenticationService/authentication.service';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { LOCALE_ID } from '@angular/core';
+
 export function getToken() {
   return localStorage.getItem('token');
 }
@@ -59,7 +63,10 @@ export function getToken() {
     MatCheckboxModule,
     MatDialogModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
 
   ],
   providers: [
@@ -68,7 +75,8 @@ export function getToken() {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationService,
       multi: true
-    }
+    },
+    {provide: LOCALE_ID, useValue: 'en-GB' }
   ],
   bootstrap: [AppComponent]
 })

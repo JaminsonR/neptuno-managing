@@ -1,0 +1,12 @@
+input.mat-input-element{
+    border-bottom: 0px solid;
+    margin: 0;
+} 
+input#special:focus{
+    border-bottom: none;
+    box-shadow: none;
+    margin: 0;
+} 
+mat-form-field mat-select#statuses{
+    padding-top: 10%;
+} 

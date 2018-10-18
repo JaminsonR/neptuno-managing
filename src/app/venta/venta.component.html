@@ -28,8 +28,28 @@
 	      	<div class="input-field col s6">
 	          <input disabled [(ngModel)]="sale.client_address" id="client_address" type="text" class="validate">
 	          <label class="active" for="client_address">Dirección</label>
-	      	</div>
-        </div>
+			</div>
+			
+			<div class="col s6">
+			  <mat-form-field>
+				<mat-select id="statuses" placeholder="Estado de venta"  [(value)]="sale.status">
+				  <mat-option *ngFor="let status of statuses" [value]="status.id">{{status.label}}
+				  </mat-option>
+				</mat-select>
+				<mat-error *ngIf="status==0">Seleccione un estado para esta venta</mat-error>
+			  </mat-form-field>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s6">
+				<mat-form-field>
+					<input  id="special" matInput [matDatepicker]="picker"  [(ngModel)]="sale.due_date" placeholder="Plazo para pagar" (click)=picker.open() (focus)=picker.open()>
+					<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+					<mat-datepicker touchUi #picker></mat-datepicker>
+				  </mat-form-field>
+
+			</div>
+		</div>
 
        <table class="centered responsive-table highlight striped">
 	        <thead>
@@ -75,14 +95,28 @@
 	    		</div>
 	    		<div class="col offset-s5 s3">
 
-	    			<button class="waves-effect waves-light black btn modal-trigger" data-target="savesuccessModal" (click)="save()">Guardar venta</button> 
+	    			<button class="waves-effect waves-light black btn" (click)="save()">Guardar venta</button> 
 	    		</div>
 	    	</div>
 	</div>
 </div>
 <ng-template #successDialog>
-    <h5 mat-dialog-title>{{modalText}}</h5>
+    <h5 mat-dialog-title>Venta Guardada Exitosamente</h5>
     <mat-dialog-actions align="center">
         <button class="waves-effect centered  center-align waves-light black btn" matDialogClose="Continuar" (click)= backToParent()>Continuar</button>
+    </mat-dialog-actions>
+</ng-template>
+
+<ng-template #faiureDialog>
+    <h5 mat-dialog-title>No se pudo guardar la venta</h5>
+    <mat-dialog-actions align="center">
+        <button class="waves-effect centered  center-align waves-light black btn" matDialogClose="Continuar">Continuar</button>
+    </mat-dialog-actions>
+</ng-template>
+
+<ng-template #incompleteDialog>
+    <h5 mat-dialog-title>Por favor llene todos los campos</h5>
+    <mat-dialog-actions align="center">
+        <button class="waves-effect centered  center-align waves-light black btn" matDialogClose="Continuar">Continuar</button>
     </mat-dialog-actions>
 </ng-template>
