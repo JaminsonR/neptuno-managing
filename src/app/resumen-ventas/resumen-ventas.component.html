@@ -27,7 +27,9 @@
 			            <td>{{sale.client_id}}</td>
 			            <td>{{sale.client_name}}</td>
 			            <td> {{sale.total | currency}}</td>
-			            <td> {{sale.date }}</td>
+						<td> {{sale.date | date}}</td>
+						<td> {{sale.status }}</td>
+						<td> {{sale.due_date | date }}</td>
 			        
 		         	</tr>
 		        </tbody>

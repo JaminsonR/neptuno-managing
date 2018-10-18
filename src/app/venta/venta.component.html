@@ -33,7 +33,7 @@
 			<div class="col s6">
 			  <mat-form-field>
 				<mat-select id="statuses" placeholder="Estado de venta"  [(value)]="sale.status">
-				  <mat-option *ngFor="let status of statuses" [value]="status.id">{{status.label}}
+				  <mat-option *ngFor="let status of statuses" [value]="status">{{status}}
 				  </mat-option>
 				</mat-select>
 				<mat-error *ngIf="status==0">Seleccione un estado para esta venta</mat-error>
@@ -115,7 +115,7 @@
 </ng-template>
 
 <ng-template #incompleteDialog>
-    <h5 mat-dialog-title>Por favor llene todos los campos</h5>
+    <h5 mat-dialog-title>Por favor llene todos los campos correctamente</h5>
     <mat-dialog-actions align="center">
         <button class="waves-effect centered  center-align waves-light black btn" matDialogClose="Continuar">Continuar</button>
     </mat-dialog-actions>

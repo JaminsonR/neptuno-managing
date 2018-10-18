@@ -18,7 +18,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ResumenVentasComponent implements OnInit {
 	sales: Sale[];
 	ELEMENT_DATA: any[] = [];
-	displayedColumns: string[] = ['Ruc.', 'Nombre', 'Total','Fecha'];
+	displayedColumns: string[] = ['Ruc.', 'Nombre', 'Total','Fecha', 'Estado', 'Plazo'];
 	search: "";
 	initialSelection = [];
 	allowMultiSelect = false;
@@ -42,8 +42,9 @@ export class ResumenVentasComponent implements OnInit {
   	}
 	formatSales(sales : Sale[]) : void {
 		for (let sale of sales){
-			sale.date = moment(sale.date).format("DD/MM/YYYY")
+			//sale.date = moment(sale.date).format("DD/MM/YYYY")
 			sale.total = Number(Big(sale.total).toFixed(2))
+			//sale.due_date = moment(sale.due_date).format("DD/MM/YYYY")
 		}		
 		
 	}

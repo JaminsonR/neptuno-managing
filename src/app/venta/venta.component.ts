@@ -45,19 +45,15 @@ export class VentaComponent implements OnInit {
 	    "subtotal" : 0.00,
 	    "tax" : 0.00,
 		"total" : 0.00,
-		"status" : 0,
-		"due_date" : " "
+		"status" : "",
+		"due_date" : ""
 	}
 	date : string = moment(new Date(this.sale.date)).format("DD/MM/YYYY")
 
 	clients : Client[]
 	products : Product[]
 	modalText = ""
-	statuses: any[] = [
-		{ "id":1, "label": "Por cobrar"},
-		{ "id":2, "label": "Cobrada"},
-		{ "id":3, "label": "Vencida"}
-	]
+	statuses: String[] = ["Por cobrar","Cobrada","Vencida"	]
   constructor(private ventaService: VentaService, private clienteService: ClientesService, private productosService: ProductosService, private dialog: MatDialog) { }
 
 	add_row = function ()
@@ -94,7 +90,7 @@ export class VentaComponent implements OnInit {
 	}
 
 	save(): void {
-	if (this.sale.client_name != " " && this.sale.items.length > 0 && this.sale.subtotal > 0 && this.sale.status > 0 && this.sale.due_date!= " " && new Date(this.sale.due_date).getTime()  >= new Date().getTime() ){
+	if (this.sale.client_name != " " && this.sale.items.length > 0 && this.sale.subtotal > 0 && this.sale.status != "" && this.sale.due_date!= "" && new Date(this.sale.due_date).getTime()  >= new Date().getTime() ){
 		this.sale.items = this.cleanItems(this.sale.items)
 		this.sale.client_id = this.sale.client_id.replace(/ /g,'')
 		this.ventaService.createSale(this.sale)

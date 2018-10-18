@@ -11,6 +11,6 @@ export class Sale {
      subtotal  : number ;
      tax  : number ;
      total  : number;
-     status : number;
+     status : string;
      due_date : string;
 }

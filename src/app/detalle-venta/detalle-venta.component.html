@@ -13,7 +13,7 @@
 	          <label class="active" for="sale.client_id">Id del cliente</label>
 	        </div>
 	        <div class="input-field col s6">
-	          <input disabled [(ngModel)]="sale.date" id="purchase_date" type="text" class="validate">
+	          <input disabled [ngModel]="sale.date | date" id="purchase_date" type="text" class="validate">
 	          <label class="active" for="purchase_date">Fecha</label>
 	        </div>
         </div>
@@ -29,8 +29,21 @@
 	      	<div class="input-field col s6">
 	          <input disabled [(ngModel)]="sale.client_address" id="client_address" type="text" class="validate">
 	          <label class="active" for="client_address">Dirección</label>
-	      	</div>
-        </div>
+			  </div>
+			  <div class="input-field col s6">
+					<input disabled [(ngModel)]="sale.status" id="sale.status" type="text" class="validate">
+					<label class="active" for="sale.status">Estado de venta</label>
+			</div>
+		</div>
+		<div class="row">
+				
+				<div class="input-field col s6">
+						<input disabled [ngModel]="sale.due_date | date" id="sale.due_date" type="text" class="validate">
+						<label class="active" for="sale.due_date">Estado de venta</label>
+				</div>
+		</div>
+
+
 
        <table class="centered responsive-table highlight striped">
 	        <thead>
