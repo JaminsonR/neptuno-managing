@@ -50,7 +50,7 @@ export class AuthenticationService implements HttpInterceptor{
 		const token = localStorage.getItem('token');		
 		req = req.clone({
       setHeaders: {
-        Authorization: `${token}`
+        Authorization: `Bearer ${token}`
       }
 		});
 		return next.handle(req);
