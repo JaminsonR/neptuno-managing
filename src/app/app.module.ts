@@ -25,7 +25,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { LOCALE_ID } from '@angular/core';
 import { DashboardComponent } from './dashboard/dashboard.component';
-
+import { InventarioComponent } from './inventario/inventario.component';
 
 export function getToken() {
   return localStorage.getItem('token');
@@ -40,7 +40,8 @@ export function getToken() {
     ResumenVentasComponent,
     DetalleVentaComponent,
     NavbarComponent,
-    DashboardComponent
+    DashboardComponent,
+    InventarioComponent
   ],
   imports: [
     JwtModule.forRoot({

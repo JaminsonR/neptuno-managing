@@ -11,12 +11,12 @@ import { environment } from '../../../environments/environment';
 })
 export class ProductosService {
 	private baseUrl = environment.baseUrl; // URL to web api
-	private productUrl = this.baseUrl + 'products';  
+	private productUrl = this.baseUrl + 'products';
 
   constructor(private http: HttpClient) { }
 
   	/** GET products from the server */
-	getProducts (): Observable<Response> { 
+	getProducts (): Observable<Response> {
 	  return this.http.get<Response>(this.productUrl)
 	}
 

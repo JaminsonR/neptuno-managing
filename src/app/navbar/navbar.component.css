@@ -33,6 +33,7 @@ div.row{
 .mat-drawer {
     background-color: black;
     width: 50%;
+    padding-left: 1%;
 
 
    
@@ -46,4 +47,12 @@ hr{
 	color: white;
 	margin: 1%;
 	margin-bottom: 3%;
+}
+
+.neptuno_letters_black_side{
+    width: 130px;
+}
+
+.neptuno_letters_black_small{
+    width: 140px;
 }
