@@ -24,6 +24,9 @@ export class VentaService {
 	  return this.http.get<Response>(this.salesUrl + id);
 	}
 
+	getSalesPerMonth (): Observable<Response> {
+	  return this.http.get<Response>(this.salesUrl + "months");
+	}
 
 	/** POST: create new sale on the server */
 	createSale (sale: Sale): Observable<any> {

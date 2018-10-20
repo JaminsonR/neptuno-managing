@@ -31,15 +31,19 @@ export class DashboardComponent implements OnInit {
   constructor(private ventaService: VentaService) { }
 
   formatSales(sales : Sale[]) : void {
+    let month
 		for (let sale of sales){
-      sale.total = Number(Big(sale.total).toFixed(0))
-      this.dataPoints.push({ y: sale.total, label: moment(sale.date).format('MMMM')})
+      sale.total = Number(Big(sale.total).toFixed(2))
+      month = moment().locale('es')
+      
+      month.month(sale.date)
+      this.dataPoints.push({ y: sale.total, label: month.format('MMMM')})
     }		
     this.chart.render();
     
 	}
   getSales() : void {
-    this.ventaService.getSales()
+    this.ventaService.getSalesPerMonth()
      .subscribe((response) => {
 
        this.sales = response.data
