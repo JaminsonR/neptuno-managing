@@ -7,7 +7,7 @@ export class Sale {
      client_name  :  string  ;
      client_phone  :  string  ;
      client_address  :  string ;
-     items  : Item[] ;
+     items : Item[] ;
      subtotal  : number ;
      tax  : number ;
      total  : number;

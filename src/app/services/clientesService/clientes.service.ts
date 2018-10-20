@@ -10,13 +10,13 @@ import { environment } from '../../../environments/environment';
 })
 export class ClientesService {
 	private baseUrl = environment.baseUrl; // URL to web api
-	private clientUrl = this.baseUrl + 'clients';  
+	private clientUrl = this.baseUrl + 'clients';
 
 	constructor(
     private http: HttpClient) { }
 
   	/** GET sales from the server */
-	getClients (): Observable<Response> { 
+	getClients (): Observable<Response> {
 	  return this.http.get<Response>(this.clientUrl)
 	}
 
