@@ -17,7 +17,7 @@ export class InventarioService {
     return this.http.get<Response>(this.productsUrl)
   }
 
-  create (product: Product): Observable<any> {
+  create (client: Product): Observable<any> {
     return this.http.post(this.productsUrl, client);
   }
 }
