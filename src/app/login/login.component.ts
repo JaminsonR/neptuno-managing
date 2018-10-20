@@ -21,7 +21,7 @@ login(): void {
         console.log(response);
         if (response.state) {
           localStorage.setItem('token', response.data);
-          this.location.go('/registro');
+          this.location.go('/dashboard');
           window.location.reload();
         } else {
           // window.location.reload();

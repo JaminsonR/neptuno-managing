@@ -24,6 +24,8 @@ import { AuthenticationService } from './services/authenticationService/authenti
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { LOCALE_ID } from '@angular/core';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 export function getToken() {
   return localStorage.getItem('token');
@@ -37,7 +39,8 @@ export function getToken() {
     VentaComponent,
     ResumenVentasComponent,
     DetalleVentaComponent,
-    NavbarComponent
+    NavbarComponent,
+    DashboardComponent
   ],
   imports: [
     JwtModule.forRoot({
@@ -45,6 +48,7 @@ export function getToken() {
         tokenGetter: getToken
       }
     }),
+ 
     MaterializeModule,
     BrowserModule,
     HttpModule,
