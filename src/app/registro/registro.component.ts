@@ -32,17 +32,7 @@ export class RegistroComponent implements OnInit {
      .subscribe(() => this.goBack());
  }
 
-  getUsers(): void {
-  	this.authenticationService.getUsers()
-  	.subscribe(response => {
-  		console.log(response.data as User[])
-  		this.users = response.data as User[];
-  	});
-  }
-
-
   ngOnInit() {
-  	this.getUsers();
   }
 
 }

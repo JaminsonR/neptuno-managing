@@ -20,7 +20,7 @@
 
 
 
-<mat-sidenav #sidenav mode="side" class= "z-depth-5">
+<mat-sidenav #sidenav mode="side" class= "z-depth-5" (blur)="sidenav.close()">
 	<nav class= "nav-extended #000000 black">
 		<div class="nav-wrapper">
 			<i (click)="sidenav.toggle()"  (blur)="sidenav.toggle()" (click)="icon()" class="material-icons left hide-on-large-only">menu</i>
