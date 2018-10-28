@@ -1,67 +1,53 @@
 <app-navbar></app-navbar>
-<div class="container">
-  <div class="card z-depth-1">
-    <h4>Registro Inventario</h4>
-    <div class="row form-group">
-      <form class="col s12">
-          <div class="row">
-              <div class="input-field col s6">
-                <input type="text" class="validate" [(ngModel)]="product.name" name="product.name" required>
-                <label>Nombre</label>
-              </div>
-              <div class="input-field col s6">
-                <input type="text" class="validate" [(ngModel)]="product.id" name="product.id" required>
-                <label>Código</label>
-              </div>
-          </div>
-          <div class="row">
-              <div class="input-field col s6">
-                <input type="number" class="validate" [(ngModel)]="product.price" name="product.price" required min="0.0">
-                <label>Precio</label>
-              </div>
-              <div class="input-field col s6">
-                <input type="number" class="validate" [(ngModel)]="product.stock" name="product.stock" required min="1">
-                <label>Cantidad</label>
-              </div>
-          </div>
-          <div class="row">
-            <div class="col s6">
-                <mat-checkbox name="product.isPrime" [(ngModel)]="product.isPrime" required>Es materia Prima</mat-checkbox>
-            </div>
-            <div class="col s6">
-                <mat-checkbox name="product.taxable" [(ngModel)]="product.taxable" required>Tiene iva</mat-checkbox>
-                <!-- <mat-checkbox type="checkbox" name="product.taxable" [(ngModel)]="product.taxable">Tiene iva</mat-checkbox> -->
-                <!-- <input type="checkbox" name="product.taxable" [(ngModel)]="product.taxable">
-                <label for="product.taxable">Tiene iva</label> -->
-            </div>
-          </div>
-          <div class="row">
-            <div class="col s1 offset-s5">
-              <button class="waves-effect waves-light black btn" (click)="createProduct()" [disabled]="product.name === '' || product.id === '' || product.price === null || product.stock === null || product.stock < 1 || product.price < 1.0">Guardar</button>
-            </div>
-          </div>
-      </form>
-    </div>
-  </div>
+<div class="container " style="text-align: center;">
+  <h4 style="text-align: center;">Registro Inventario</h4>
+  <button mat-raised-button (click)="openDialog()" style="text-align: center;" color="primary" >Añadir</button>
   <div class=container>
-      <h4>Inventario</h4>
-      <table>
-          <tr>
-            <th>Nombre</th>
-            <th>Código</th>
-            <th>Precio</th>
-            <th>Cantidad</th>
-            <th>Es materia prima</th>
-            <th>Tiene iva</th>
-          </tr>
-          <tr *ngFor="let product of products">
-            <td>{{product.name}}</td>
-            <td>{{product.id}}</td>
-            <td>{{product.price}}</td>
-            <td>{{product.stock}}</td>
-            <td>{{product.isPrime ? 'si' : 'no'}}</td>
-            <td>{{product.taxable ? 'si' : 'no'}}</td>
-          </tr>
-        </table>
-    </div>
+    <!-- <table>
+      <tr>
+        <th>Nombre</th>
+        <th>Código</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Es materia prima</th>
+        <th>Tiene iva</th>
+      </tr>
+      <tr *ngFor="let product of products">
+        <td>{{product.name}}</td>
+        <td>{{product.id}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.stock}}</td>
+        <td><mat-icon>{{product.isPrime ? 'check' : 'close'}}</mat-icon></td>
+        <td><mat-icon>{{product.taxable ? 'check' : 'close'}}</mat-icon></td>
+      </tr>
+    </table> -->
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Código </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+      <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Precio </th>
+          <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+      </ng-container>
+      <ng-container matColumnDef="stock">
+          <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+          <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+      </ng-container>
+      <ng-container matColumnDef="isPrime">
+          <th mat-header-cell *matHeaderCellDef> Es materia prima </th>
+          <td mat-cell *matCellDef="let element"> <mat-icon>{{element.isPrime ? 'check' : 'close'}}</mat-icon> </td>
+      </ng-container>
+      <ng-container matColumnDef="taxable">
+          <th mat-header-cell *matHeaderCellDef> Tiene iva </th>
+          <td mat-cell *matCellDef="let element"> <mat-icon>{{element.taxable ? 'check' : 'close'}}</mat-icon> </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
 </div>

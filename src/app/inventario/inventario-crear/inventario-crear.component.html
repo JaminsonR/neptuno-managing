@@ -1,0 +1,42 @@
+<div class="card z-depth-1">
+  <div class="row form-group">
+    <form class="col s12">
+        <div class="row">
+            <div class="input-field col s6">
+              <input type="text" class="validate" [(ngModel)]="product.name" name="product.name" required>
+              <label>Nombre</label>
+            </div>
+            <div class="input-field col s6">
+              <input type="text" class="validate" [(ngModel)]="product.id" name="product.id" required>
+              <label>Código</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+              <input type="number" class="validate" [(ngModel)]="product.price" name="product.price" required min="0.0">
+              <label>Precio</label>
+            </div>
+            <div class="input-field col s6">
+              <input type="number" class="validate" [(ngModel)]="product.stock" name="product.stock" required min="1">
+              <label>Cantidad</label>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col s6">
+              <mat-checkbox name="product.isPrime" [(ngModel)]="product.isPrime" required>Es materia Prima</mat-checkbox>
+          </div>
+          <div class="col s6">
+              <mat-checkbox name="product.taxable" [(ngModel)]="product.taxable" required>Tiene iva</mat-checkbox>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s6">
+              <button class="waves-effect waves-light accent btn" (click)="createProduct()" [disabled]="product.name === '' || product.id === '' || product.price === null || product.stock === null || product.stock < 1 || product.price < 1.0">Crear</button>
+          </div>
+          <div class="col s6">
+              <button mat-raised-button color="warn" (click)="salir()">Salir</button>
+          </div>
+        </div>
+    </form>
+  </div>
+</div>

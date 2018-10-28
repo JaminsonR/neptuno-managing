@@ -1,26 +1,22 @@
-import { Component, OnInit, Inject } from '@angular/core';
+// tabla example
+// https://stackblitz.com/edit/angular-axjzov-xc4kbp?file=app%2Ftable-filtering-example.ts
+
+import { Component, OnInit } from '@angular/core';
 import { Product } from '../models/Product';
 import { ProductosService } from '../services/productosService/producto.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { Big } from 'big.js';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { InventarioCrearComponent } from './inventario-crear/inventario-crear.component';
 
 @Component({
   selector: 'app-inventario',
   templateUrl: './inventario.component.html',
   styleUrls: ['./inventario.component.css']
 })
+
 export class InventarioComponent implements OnInit {
-  animal: string;
-  name: string;
   products: Product[];
-  product: Product = {
-    id: '',
-    name: '',
-    price: null,
-    taxable: true,
-    stock: null,
-    isPrime: false
-  };
+  displayedColumns: string[] = ['name', 'id', 'price', 'stock', 'isPrime', 'taxable'];
+  dataSource = new MatTableDataSource();
 
   constructor(
     private productosService: ProductosService,
@@ -31,20 +27,7 @@ export class InventarioComponent implements OnInit {
     this.productosService.getProducts()
      .subscribe((response) => {
        this.products = response.data;
-     },
-     (error) => {});
-  }
-
-  createProduct(): void {
-    this.productosService.createProduct(this.product)
-     .subscribe((response) => {
-      this.product.id = '';
-      this.product.name = '';
-      this.product.price = null;
-      this.product.taxable = true;
-      this.product.stock = null;
-      this.product.isPrime = false;
-      this.products.unshift(response.data);
+      this.dataSource = new MatTableDataSource(this.products);
      },
      (error) => {});
   }
@@ -53,4 +36,15 @@ export class InventarioComponent implements OnInit {
     this.getProductos();
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(InventarioCrearComponent, {
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.products.unshift(result);
+        this.dataSource = new MatTableDataSource(this.products);
+      }
+    });
+  }
 }

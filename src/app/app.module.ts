@@ -13,7 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { VentaComponent } from './venta/venta.component';
 import { ResumenVentasComponent } from './resumen-ventas/resumen-ventas.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule,MatFormFieldModule,MatCheckboxModule,MatButtonModule,MatToolbarModule,MatIconModule,MatMenuModule,MatProgressSpinnerModule,MatCardModule, MatNativeDateModule } from '@angular/material';
+import { MatInputModule,MatFormFieldModule,MatCheckboxModule,MatButtonModule,MatToolbarModule,MatIconModule,MatMenuModule,MatProgressSpinnerModule,MatCardModule, MatNativeDateModule, MatTableModule } from '@angular/material';
 import { DetalleVentaComponent } from './detalle-venta/detalle-venta.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -26,6 +26,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { LOCALE_ID } from '@angular/core';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InventarioComponent } from './inventario/inventario.component';
+import { InventarioCrearComponent } from './inventario/inventario-crear/inventario-crear.component';
 
 export function getToken() {
   return localStorage.getItem('token');
@@ -41,7 +42,8 @@ export function getToken() {
     DetalleVentaComponent,
     NavbarComponent,
     DashboardComponent,
-    InventarioComponent
+    InventarioComponent,
+    InventarioCrearComponent
   ],
   imports: [
     JwtModule.forRoot({
@@ -49,7 +51,7 @@ export function getToken() {
         tokenGetter: getToken
       }
     }),
- 
+    MatTableModule,
     MaterializeModule,
     BrowserModule,
     HttpModule,
@@ -82,6 +84,9 @@ export function getToken() {
       multi: true
     },
     {provide: LOCALE_ID, useValue: 'en-GB' }
+  ],
+  entryComponents: [
+    InventarioCrearComponent
   ],
   bootstrap: [AppComponent]
 })
