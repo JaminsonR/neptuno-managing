@@ -13,7 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { VentaComponent } from './venta/venta.component';
 import { ResumenVentasComponent } from './resumen-ventas/resumen-ventas.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule,MatFormFieldModule,MatCheckboxModule,MatButtonModule,MatToolbarModule,MatIconModule,MatMenuModule,MatProgressSpinnerModule,MatCardModule, MatNativeDateModule, MatTableModule } from '@angular/material';
+import { MatInputModule,MatFormFieldModule,MatCheckboxModule,MatButtonModule,MatToolbarModule,MatIconModule,MatMenuModule,MatProgressSpinnerModule,MatCardModule, MatNativeDateModule, MatTableModule, MatSnackBarModule } from '@angular/material';
 import { DetalleVentaComponent } from './detalle-venta/detalle-venta.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -51,6 +51,7 @@ export function getToken() {
         tokenGetter: getToken
       }
     }),
+    MatSnackBarModule,
     MatTableModule,
     MaterializeModule,
     BrowserModule,

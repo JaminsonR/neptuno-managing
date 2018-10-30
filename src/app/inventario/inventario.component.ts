@@ -1,10 +1,10 @@
 // tabla example
 // https://stackblitz.com/edit/angular-axjzov-xc4kbp?file=app%2Ftable-filtering-example.ts
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Product } from '../models/Product';
 import { ProductosService } from '../services/productosService/producto.service';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { InventarioCrearComponent } from './inventario-crear/inventario-crear.component';
 
 @Component({
@@ -17,7 +17,7 @@ export class InventarioComponent implements OnInit {
   products: Product[];
   displayedColumns: string[] = ['name', 'id', 'price', 'stock', 'isPrime', 'taxable'];
   dataSource = new MatTableDataSource();
-
+  @ViewChild(MatSort) sort: MatSort;
   constructor(
     private productosService: ProductosService,
     public dialog: MatDialog

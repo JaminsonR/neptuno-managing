@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Product } from '../../models/Product';
 import { ProductosService } from '../../services/productosService/producto.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-inventario-crear',
@@ -17,17 +17,26 @@ export class InventarioCrearComponent implements OnInit {
     stock: null,
     isPrime: false
   };
-
+  // dataSource = new MatTableDataSource(product);
   constructor(
     private productosService: ProductosService,
     public dialogRef: MatDialogRef<InventarioCrearComponent>,
+    public snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   ngOnInit() {
+    // this.dataSource.sort = this.sort;
   }
 
-  createProduct(): void {
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 6000,
+      verticalPosition: 'top'
+    });
+  }
+
+  createProduct(): void { // FIXME: validar que el codigo sea unico y mostrar mensaje de error
     this.productosService.createProduct(this.product)
      .subscribe((response) => {
       this.product.id = '';
@@ -38,7 +47,10 @@ export class InventarioCrearComponent implements OnInit {
       this.product.isPrime = false;
       this.dialogRef.close(response.data);
      },
-     (error) => {});
+     (error) => {
+        this.product.id = '';
+        this.openSnackBar('El código ya existe, escoja otro', 'cerrar');
+     });
   }
 
   salir (): void {

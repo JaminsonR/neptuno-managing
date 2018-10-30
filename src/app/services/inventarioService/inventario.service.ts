@@ -14,7 +14,7 @@ export class InventarioService {
   constructor(
     private http: HttpClient) {}
   get (): Observable<Response> {
-    return this.http.get<Response>(this.productsUrl)
+    return this.http.get<Response>(this.productsUrl);
   }
 
   create (client: Product): Observable<any> {
