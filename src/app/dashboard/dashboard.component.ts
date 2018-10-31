@@ -59,6 +59,7 @@ export class DashboardComponent implements OnInit {
     this.chart = new CanvasJS.Chart("chartContainer", {
       animationEnabled: true,
       exportEnabled: true,
+      theme: "dark2",
       title: {
         text: "Ventas mensuales"
       },
