@@ -34,9 +34,8 @@ export class DashboardComponent implements OnInit {
     let month
 		for (let sale of sales){
       sale.total = Number(Big(sale.total).toFixed(2))
-      month = moment().locale('es')
-      
-      month.month(sale.date)
+      month = moment().locale('es')      
+      month.month(sale.date - 1)
       this.dataPoints.push({ y: sale.total, label: month.format('MMMM')})
     }		
     this.chart.render();
