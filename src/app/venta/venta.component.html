@@ -66,7 +66,7 @@
 	        <tbody>
 	        	 <tr *ngFor="let item of sale.items ; index as i">
 		            <td [textContent]="sale.items[i].quantity" (blur)="updateAmount($event, i)" contenteditable="true"></td>
-		            <td [textContent]="sale.items[i].product_id" (blur)="productLookUp($event, i)" contenteditable="true" contenteditable="true"></td>
+		            <td [textContent]="sale.items[i].product_id" (blur)="productLookUp($event, i)" contenteditable="true"></td>
 		            <td> {{item.product_name}}</td>
 		            <td> {{item.price | currency}}</td>
 		            <td> {{item.amount  | currency}}</td>

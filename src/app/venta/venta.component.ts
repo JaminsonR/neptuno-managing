@@ -95,7 +95,7 @@ export class VentaComponent implements OnInit {
 		
 	if (this.sale.client_name != " " && this.sale.items.length > 0 && this.sale.subtotal > 0 && this.sale.status != "" && this.sale.due_date!= "" && new Date(this.sale.date).getTime() <= new Date(this.sale.due_date).getTime() ){
 		this.sale.items = this.cleanItems(this.sale.items)
-		this.sale.client_id = this.sale.client_id.replace(/ /g,'')
+		this.sale.client_id = this.sale.client_id.replace(/\s/g,'')
 		this.ventaService.createSale(this.sale)
 	     .subscribe((response) => {
 	     	console.log(response)
@@ -125,7 +125,7 @@ export class VentaComponent implements OnInit {
 	 }
 
 	clientLookUp(event: any): void {
-	 	let id = event.target.value.replace(/ /g,'')
+	 	let id = event.target.value.replace(/\s/g,'')
 	 	for (var client of this.clients) {
 	 		
 	 		if (client.client_id === id) {
@@ -141,17 +141,18 @@ export class VentaComponent implements OnInit {
 	}
 
 	productLookUp(event: any, i : number): void {
-	 	let id = event.target.innerText.replace(/ /g,'')
+	 	let id = event.target.innerText.replace(/\s/g,'')
 	 	for (var product of this.products) {	 		
 	 		if (product.id === id) {
 	 			if ( ! this.sale.items[i].quantity ) {
 	 				this.sale.items[i].quantity = 0.00
 	 			}
-	 			this.sale.items[i].product_id=event.target.innerText.replace(/ /g,'')
+	 			this.sale.items[i].product_id=event.target.innerText.replace(/\s/g,'')
 	 			this.sale.items[i].product_name = product.name
 	 			this.sale.items[i].price = product.price
 	 			this.sale.items[i].amount = Number(Big(this.sale.items[i].quantity).times(this.sale.items[i].price).toString())
-	 			this.updateTotals()
+				 console.log(product.name)
+				 this.updateTotals() 
 	 			return 	 		
 	 		}
 	 	}
@@ -160,7 +161,7 @@ export class VentaComponent implements OnInit {
 
 	}
 	updateAmount(event:any, i: number) : void {
-		let quantity = event.target.innerText
+		let quantity = event.target.innerText.replace(/\s/g,'')
 		if ( ! this.sale.items[i].price) {
 	 				this.sale.items[i].price = 0.00
 	 			}
@@ -173,15 +174,23 @@ export class VentaComponent implements OnInit {
 	}
 	updateTotals() : void {
 		let subtotal : Big = Big(0.00)
+		let tax_subtotal : Big = Big(0.00)
 		let tax  : Big = Big(0.00)
 		let total : Big = Big(0.00)
 		for (let item of this.sale.items) {
 			subtotal = Big(item.amount).plus(subtotal)
+			let prod = this.products.find(
+				function(product) {
+					return product.id === item.product_id
+			  	})
+			if (prod.taxable){
+				tax_subtotal = Big(item.amount).plus(tax_subtotal)
+			}
 		}
-		tax = subtotal.times(this.TAX)
+		tax = tax_subtotal.times(this.TAX)
 		total = subtotal.plus(tax)
 		this.sale.subtotal = Number(subtotal.toString())
-		this.sale.tax = Number(tax.toString())
+		this.sale.tax =  Number(tax.toString())
 		this.sale.total = Number(total.toString())
 
 	}
