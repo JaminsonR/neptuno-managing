@@ -15,7 +15,7 @@ export class ClientesService {
 	constructor(
     private http: HttpClient) { }
 
-  	/** GET sales from the server */
+  	/** GET clients from the server */
 	getClients (): Observable<Response> {
 	  return this.http.get<Response>(this.clientUrl)
 	}

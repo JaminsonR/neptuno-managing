@@ -29,7 +29,7 @@ export class AuthenticationService implements HttpInterceptor{
 
 	/** POST: create the user on the server */
 	createUser (user: User): Observable<any> {
-		let url = this.usersUrl + 'registro';
+		let url = this.usersUrl + 'register';
 	  return this.http.post(url, user);
 	}
 
