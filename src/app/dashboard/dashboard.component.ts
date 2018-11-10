@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   dataPoints: any[] = [];
   constructor(private ventaService: VentaService) { }
 
-  formatSales(sales : Sale[]) : void {
+  formatSales(sales : any[]) : void {
     let month
 		for (let sale of sales){
       sale.total = Number(Big(sale.total).toFixed(2))
