@@ -8,7 +8,7 @@ import { ClientesService } from '../services/clientesService/clientes.service';
 import { ProductosService } from '../services/productosService/producto.service';
 import { Client } from '../models/Client';
 import { Product } from '../models/Product';
-import {MatDialog} from "@angular/material";
+import {MatDialog, MatDialogRef} from "@angular/material";
 
 
 
@@ -19,7 +19,7 @@ import {MatDialog} from "@angular/material";
   styleUrls: ['./venta.component.css']
 })
 export class VentaComponent implements OnInit {
-
+	
 	@ViewChild('successDialog') successDialog: TemplateRef<any>
 	@ViewChild('failureDialog') failureDialog: TemplateRef<any>
 	@ViewChild('incompleteDialog') incompleteDialog: TemplateRef<any>
@@ -59,15 +59,18 @@ export class VentaComponent implements OnInit {
 	add_row = function ()
 	{
 		if (this.sale.items[this.sale.items.length -1 ].quantity > 0)
-		{
-			this.sale.items.push(new Item());	
+		{	
+			let item = new Item()
+			item.quantity = 0
+			item.amount = 0
+			this.sale.items.push(item)
 		}
 
 		
 	}
 	openDialog(dialog :TemplateRef <any>) {
     //const dialogConfig = new MatDialogConfig();
-    this.dialog.open(dialog);
+    return this.dialog.open(dialog);
   }
 
 	getClients(): void {
@@ -89,17 +92,13 @@ export class VentaComponent implements OnInit {
 		  window.location.replace('../resumen_ventas');
 	}
 
-	save(): void {
-		console.log(new Date(this.sale.date).getTime())
-		console.log( new Date(this.sale.due_date).getTime())
-		
+	save(): void {	
 	if (this.sale.client_name != " " && this.sale.items.length > 0 && this.sale.subtotal > 0 && this.sale.status != "" && this.sale.due_date!= "" && new Date(this.sale.date).getTime() <= new Date(this.sale.due_date).getTime() ){
 		this.sale.items = this.cleanItems(this.sale.items)
 		this.sale.client_id = this.sale.client_id.replace(/\s/g,'')
 		this.ventaService.createSale(this.sale)
 	     .subscribe((response) => {
-	     	console.log(response)
-	     	if (response.status === true){
+	     	if (response.state === true){
 				this.openDialog(this.successDialog)
 	     	}else{
 				this.openDialog(this.failureDialog)
@@ -151,7 +150,6 @@ export class VentaComponent implements OnInit {
 	 			this.sale.items[i].product_name = product.name
 	 			this.sale.items[i].price = product.price
 	 			this.sale.items[i].amount = Number(Big(this.sale.items[i].quantity).times(this.sale.items[i].price).toString())
-				 console.log(product.name)
 				 this.updateTotals() 
 	 			return 	 		
 	 		}
@@ -183,7 +181,7 @@ export class VentaComponent implements OnInit {
 				function(product) {
 					return product.id === item.product_id
 			  	})
-			if (prod.taxable){
+			if (prod && prod.taxable){
 				tax_subtotal = Big(item.amount).plus(tax_subtotal)
 			}
 		}
