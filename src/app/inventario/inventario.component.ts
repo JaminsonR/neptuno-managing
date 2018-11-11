@@ -15,7 +15,7 @@ import { InventarioCrearComponent } from './inventario-crear/inventario-crear.co
 
 export class InventarioComponent implements OnInit {
   products: Product[];
-  displayedColumns: string[] = ['name', 'id', 'price', 'stock', 'isPrime', 'taxable'];
+  displayedColumns: string[] = ['name', 'id', 'price', 'stock', 'isPrime', 'taxable', 'existence', 'delete'];
   dataSource = new MatTableDataSource();
   @ViewChild(MatSort) sort: MatSort;
   constructor(
@@ -28,6 +28,18 @@ export class InventarioComponent implements OnInit {
      .subscribe((response) => {
        this.products = response.data;
       this.dataSource = new MatTableDataSource(this.products);
+     },
+     (error) => {});
+  }
+
+  modifyExistence(id, amount): void {
+    const self = this;
+    this.productosService.modifyExistence({ id, amount })
+     .subscribe((response) => {
+       console.log(response)
+      if (response.state) {
+        // this.dataSource = new MatTableDataSource(this.products);
+      }
      },
      (error) => {});
   }

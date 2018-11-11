@@ -17,13 +17,17 @@ export class ProductosService {
 
   	/** GET products from the server */
 	getProducts (): Observable<Response> {
-	  return this.http.get<Response>(this.productUrl)
+	  return this.http.get<Response>(this.productUrl);
 	}
 
 	/** POST: create new product on the server */
 	createProduct (product: Product): Observable<any> {
 	  return this.http.post(this.productUrl, product);
-	}
+  }
+
+  modifyExistence ({id, amount}): Observable<any> {
+    return this.http.post(this.productUrl + `/existence/${id}/${amount}`, {});
+  }
 }
 
 
