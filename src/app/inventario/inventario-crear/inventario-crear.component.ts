@@ -1,17 +1,23 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Product } from '../../models/Product';
-import { ProductosService } from '../../services/productosService/producto.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatTableDataSource } from '@angular/material';
+import { Component, OnInit, Inject } from "@angular/core";
+import { Product } from "../../models/Product";
+import { ProductosService } from "../../services/productosService/producto.service";
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatSnackBar,
+  MatTableDataSource
+} from "@angular/material";
 
 @Component({
-  selector: 'app-inventario-crear',
-  templateUrl: './inventario-crear.component.html',
-  styleUrls: ['./inventario-crear.component.css']
+  selector: "app-inventario-crear",
+  templateUrl: "./inventario-crear.component.html",
+  styleUrls: ["./inventario-crear.component.css"]
 })
 export class InventarioCrearComponent implements OnInit {
   product: Product = {
-    id: '',
-    name: '',
+    id: "",
+    name: "",
     price: null,
     taxable: true,
     stock: null,
@@ -26,35 +32,51 @@ export class InventarioCrearComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.dataSource.sort = this.sort;
+    if (this.data) {
+      this.product = this.data;
+    }
   }
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 6000,
-      verticalPosition: 'top'
+      verticalPosition: "top"
     });
   }
 
-  createProduct(): void { // FIXME: validar que el codigo sea unico y mostrar mensaje de error
-    this.productosService.createProduct(this.product)
-     .subscribe((response) => {
-      this.product.id = '';
-      this.product.name = '';
-      this.product.price = null;
-      this.product.taxable = true;
-      this.product.stock = null;
-      this.product.isPrime = false;
-      this.dialogRef.close(response.data);
-     },
-     (error) => {
-        this.product.id = '';
-        this.openSnackBar('El código ya existe, escoja otro', 'cerrar');
-     });
+  createProduct(): void {
+    // FIXME: validar que el codigo sea unico y mostrar mensaje de error
+    if (this.data) {
+      console.log(this.product); // FIXME: algo raro pasa aqui
+      this.productosService.updateProduct(this.data).subscribe(
+        response => {
+          this.dialogRef.close(response.data);
+        },
+        error => {
+          this.product.id = "";
+          this.openSnackBar("El código ya existe, escoja otro", "cerrar");
+        }
+      );
+    } else {
+      this.productosService.createProduct(this.product).subscribe(
+        response => {
+          this.product.id = "";
+          this.product.name = "";
+          this.product.price = null;
+          this.product.taxable = true;
+          this.product.stock = null;
+          this.product.isPrime = false;
+          this.dialogRef.close(response.data);
+        },
+        error => {
+          this.product.id = "";
+          this.openSnackBar("El código ya existe, escoja otro", "cerrar");
+        }
+      );
+    }
   }
 
-  salir (): void {
+  salir(): void {
     this.dialogRef.close();
   }
-
 }

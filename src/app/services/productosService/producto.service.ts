@@ -1,35 +1,30 @@
-import { Injectable } from '@angular/core';
-import { Product } from '../../models/Product';
-import { Response } from '../../models/response';
-import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-
+import { Injectable } from "@angular/core";
+import { Product } from "../../models/Product";
+import { Response } from "../../models/response";
+import { Observable, of } from "rxjs";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ProductosService {
-	private baseUrl = environment.baseUrl; // URL to web api
-	private productUrl = this.baseUrl + 'products';
+  private baseUrl = environment.baseUrl; // URL to web api
+  private productUrl = this.baseUrl + "products";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  	/** GET products from the server */
-	getProducts (): Observable<Response> {
-	  return this.http.get<Response>(this.productUrl);
-	}
-
-	/** POST: create new product on the server */
-	createProduct (product: Product): Observable<any> {
-	  return this.http.post(this.productUrl, product);
+  /** GET products from the server */
+  getProducts(): Observable<Response> {
+    return this.http.get<Response>(this.productUrl);
   }
 
-  modifyExistence ({id, amount}): Observable<any> {
-    return this.http.post(this.productUrl + `/existence/${id}/${amount}`, {});
+  /** POST: create new product on the server */
+  createProduct(product: Product): Observable<any> {
+    return this.http.post(this.productUrl, product);
+  }
+
+  updateProduct(product: Product): Observable<any> {
+    return this.http.post(this.productUrl + `/${product.id}`, product);
   }
 }
-
-
-
-
