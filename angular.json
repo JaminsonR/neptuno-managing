@@ -133,5 +133,8 @@
       }
     }
   },
-  "defaultProject": "neptuno-managing"
+  "defaultProject": "neptuno-managing",
+  "cli": {
+    "analytics": false
+  }
 }
