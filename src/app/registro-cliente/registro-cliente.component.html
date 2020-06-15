@@ -1,0 +1,72 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="card z-depth-1">
+    <h2>Nuevo Cliente</h2>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input
+              [(ngModel)]="client.client_id"
+              name="client.client_id"
+              type="text"
+              class="validate"
+            />
+            <label>Numero de cedula o RUC</label>
+          </div>
+          <div class="input-field col s6">
+            <input
+              id="email"
+              [(ngModel)]="client.client_email"
+              name="client.client_email"
+              type="email"
+              class="validate"
+            />
+            <label for="email">Email</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s6">
+            <input
+              [(ngModel)]="client.client_name"
+              name="client.client_name"
+              type="text"
+              class="validate"
+            />
+            <label>Nombre del cliente</label>
+          </div>
+          <div class="input-field col s6">
+            <input
+              [(ngModel)]="client.client_phone"
+              name="client.client_phone"
+              type="tel"
+              class="validate"
+            />
+            <label>Numero de telefono</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input
+              id="family_name"
+              [(ngModel)]="client.client_address"
+              name="client.client_address"
+              type="text"
+              class="validate"
+            />
+            <label for="client.client_address">Direccion</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s1 offset-s5">
+            <button class="waves-effect waves-light black btn" (click)="save()">
+              save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
