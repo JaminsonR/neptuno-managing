@@ -4,16 +4,6 @@
       <div class="row">
         <div class="input-field col s6">
           <input
-            type="text"
-            class="validate"
-            [(ngModel)]="product.name"
-            name="product.name"
-            required
-          />
-          <label>Nombre</label>
-        </div>
-        <div class="input-field col s6">
-          <input
             matInput
             type="text"
             class="validate"
@@ -22,6 +12,16 @@
             required
           />
           <label>Código</label>
+        </div>
+        <div class="input-field col s6">
+          <input
+            type="text"
+            class="validate"
+            [(ngModel)]="product.name"
+            name="product.name"
+            required
+          />
+          <label>Descripción</label>
         </div>
       </div>
       <div class="row">
@@ -36,6 +36,18 @@
             min="0.0"
           />
           <label>Precio</label>
+        </div>
+        <div class="input-field col s6">
+          <input
+            matInput
+            type="number"
+            class="validate"
+            [(ngModel)]="product.bulkPrice"
+            name="product.bulkPrice"
+            required
+            min="0.0"
+          />
+          <label>Precio Mayorista</label>
         </div>
         <div class="input-field col s6">
           <input
@@ -61,8 +73,8 @@
         </div>
         <div class="col s6">
           <mat-checkbox
-            name="product.taxable"
-            [(ngModel)]="product.taxable"
+            name="product.isTaxable"
+            [(ngModel)]="product.isTaxable"
             required
             >Tiene iva</mat-checkbox
           >

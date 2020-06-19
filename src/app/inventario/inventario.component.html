@@ -12,25 +12,41 @@
   <div class="container">
     <table>
       <tr>
-        <th>Nombre</th>
-        <th>Código</th>
-        <th>Precio</th>
-        <th style="text-align: center">Es materia prima</th>
-        <th style="text-align: center">Grava iva</th>
-        <th>Cantidad</th>
+        <th style="text-align: center;">Código</th>
+        <th style="text-align: center;">Descripcion</th>
+        <th style="text-align: center;">Precio</th>
+        <th style="text-align: center;">Precio Mayorista</th>
+        <th style="text-align: center;">Es materia prima</th>
+        <th style="text-align: center;">Grava iva</th>
+        <th style="text-align: center;">Cantidad</th>
         <th></th>
       </tr>
       <tr *ngFor="let product of products">
-        <td>{{ product.name }}</td>
-        <td>{{ product.id }}</td>
-        <td>{{ product.price }}</td>
-        <td style="text-align: center">
+        <td style="text-align: center;">{{ product.id }}</td>
+        <td style="text-align: center;">{{ product.name }}</td>
+        <td style="text-align: center;">
+          {{
+            (product.price / 100).toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD"
+            })
+          }}
+        </td>
+        <td style="text-align: center;">
+          {{
+            (product.bulkPrice / 100).toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD"
+            })
+          }}
+        </td>
+        <td style="text-align: center;">
           <mat-icon>{{ product.isPrime ? "check" : "close" }}</mat-icon>
         </td>
-        <td style="text-align: center">
-          <mat-icon>{{ product.taxable ? "check" : "close" }}</mat-icon>
+        <td style="text-align: center;">
+          <mat-icon>{{ product.isTaxable ? "check" : "close" }}</mat-icon>
         </td>
-        <td height="5px">
+        <td style="text-align: center;" height="5px">
           {{ product.stock }}
           <!--
             <div class="row">
@@ -77,9 +93,9 @@
             <th mat-header-cell *matHeaderCellDef> Es materia prima </th>
             <td mat-cell *matCellDef="let element"> <mat-icon>{{element.isPrime ? 'check' : 'close'}}</mat-icon> </td>
         </ng-container>
-        <ng-container matColumnDef="taxable">
+        <ng-container matColumnDef="isTaxable">
             <th mat-header-cell *matHeaderCellDef> Grava IVA </th>
-            <td mat-cell *matCellDef="let element"> <mat-icon>{{element.taxable ? 'check' : 'close'}}</mat-icon> </td>
+            <td mat-cell *matCellDef="let element"> <mat-icon>{{element.isTaxable ? 'check' : 'close'}}</mat-icon> </td>
         </ng-container>
         <ng-container matColumnDef="existence">
           <th mat-header-cell *matHeaderCellDef> Añadir existencia </th>
