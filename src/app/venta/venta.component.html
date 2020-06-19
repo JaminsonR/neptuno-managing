@@ -1,122 +1,213 @@
 <app-navbar></app-navbar>
 <div class="container">
-	<div class="card z-depth-1">
-		<div class="row">
-			<div class="col s12">
-    			<h2 class="center-align">Registro de Venta</h2>
-    		</div>
-    	</div>
-    	<div class="row">
-			<div class="input-field col s6">
-	          <input [(ngModel)]="sale.client_id" id="client_id" type="text" class="validate" (blur)="clientLookUp($event) ">
-	          <label  class="active" for="client_id">Id del cliente</label>
-	        </div>
-	        <div class="input-field col s6">
-	          <input disabled [(ngModel)]="date" id="purchase_date" type="text" class="validate">
-	          <label  class="active" for="purchase_date">Fecha</label>
-	        </div>
-        </div>
-        <div class="row">
-        	<div class="input-field col s6">
-	          <input disabled [(ngModel)]="sale.client_name" id="client_name" type="text" class="validate">
-	          <label class="active" for="client_name">Nombre</label>
-	      	</div>
-	        <div class="input-field col s6">
-	          <input disabled [(ngModel)]="sale.client_phone" id="client_phone" type="text" class="validate">
-	          <label  class="active" for="client_phone">Celular</label>
-	      	</div>
-	      	<div class="input-field col s6">
-	          <input disabled [(ngModel)]="sale.client_address" id="client_address" type="text" class="validate">
-	          <label class="active" for="client_address">Dirección</label>
-			</div>
-			
-			<div class="col s6">
-			  <mat-form-field>
-				<mat-select id="statuses" placeholder="Estado de venta"  [(value)]="sale.status">
-				  <mat-option *ngFor="let status of statuses" [value]="status">{{status}}
-				  </mat-option>
-				</mat-select>
-				<mat-error *ngIf="sale.status==''">Seleccione un estado para esta venta</mat-error>
-			  </mat-form-field>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col s6">
-				<mat-form-field>
-					<input  id="special" matInput [matDatepicker]="picker"  [(ngModel)]="sale.due_date" placeholder="Plazo para pagar" (click)=picker.open() (focus)=picker.open()>
-					<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-					<mat-datepicker touchUi #picker></mat-datepicker>
-				  </mat-form-field>
+  <div class="card z-depth-1">
+    <div class="row">
+      <div class="col s12">
+        <h2 class="center-align">Registro de Venta</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s6">
+        <input
+          [(ngModel)]="sale.client_id"
+          id="client_id"
+          type="text"
+          class="validate"
+          (blur)="clientLookUp($event)"
+        />
+        <label class="active" for="client_id">RUC del cliente</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          disabled
+          [(ngModel)]="date"
+          id="purchase_date"
+          type="text"
+          class="validate"
+        />
+        <label class="active" for="purchase_date">Fecha</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s6">
+        <input
+          disabled
+          [(ngModel)]="sale.client_name"
+          id="client_name"
+          type="text"
+          class="validate"
+        />
+        <label class="active" for="client_name">Nombre del Cliente</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          disabled
+          [(ngModel)]="sale.client_phone"
+          id="client_phone"
+          type="text"
+          class="validate"
+        />
+        <label class="active" for="client_phone">Celular</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          disabled
+          [(ngModel)]="sale.client_address"
+          id="client_address"
+          type="text"
+          class="validate"
+        />
+        <label class="active" for="client_address">Dirección</label>
+      </div>
 
-			</div>
-		</div>
+      <div class="col s6">
+        <mat-form-field>
+          <mat-select
+            id="statuses"
+            placeholder="Estado de venta"
+            [(value)]="sale.status"
+          >
+            <mat-option *ngFor="let status of statuses" [value]="status"
+              >{{ status }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="sale.status == ''"
+            >Seleccione un estado para esta venta</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6">
+        <mat-form-field>
+          <input
+            id="special"
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="sale.due_date"
+            placeholder="Plazo para pagar"
+            (click)="picker.open()"
+            (focus)="picker.open()"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
 
-       <table class="centered responsive-table highlight striped">
-	        <thead>
-	          <tr>
-	              <th>Cantidad</th>
-	              <th>Codigo del producto</th>
-	              <th>Nombre del producto</th>
-	              <th>PVP</th>
-	              <th>Importe</th>
-	              <a class="btn-floating btn-small waves-effect waves-light black" (click)="add_row()"><i class="material-icons">add</i></a>
-	          </tr>
-	        </thead>
+    <table class="centered responsive-table highlight striped">
+      <thead>
+        <tr>
+          <th>Cantidad</th>
+          <th>Codigo del producto</th>
+          <th>Descripción</th>
+          <th>PVP</th>
+          <th>Subtotal</th>
+          <th>Descuento</th>
+          <th>Importe</th>
+          <th>Mayorista</th>
 
-	        <tbody>
-	        	 <tr *ngFor="let item of sale.items ; index as i">
-		            <td [textContent]="sale.items[i].quantity" (blur)="updateAmount($event, i)" contenteditable="true"></td>
-		            <td [textContent]="sale.items[i].product_id" (blur)="productLookUp($event, i)" contenteditable="true"></td>
-		            <td> {{item.product_name}}</td>
-		            <td> {{item.price | currency}}</td>
-		            <td> {{item.amount  | currency}}</td>
-	         	</tr>
-	        </tbody>
-    	</table>
-    
-	    	<div class="row">
-	    		<div class="col offset-s8 s2">
-	    			<h6><b>Subtotal:</b></h6>
-	    		</div>
-	    		<div class="col s1">
-	    			<h6>{{sale.subtotal | currency}}</h6>
-	    		</div>
-	    		<div class="col offset-s8 s2">
-	    			<h6><b>IVA:</b></h6>
-	    		</div>
-	    		<div class="col s1">
-	    			<h6>{{sale.tax| currency}}</h6>
-	    		</div>
-	    		<div class="col offset-s8 s2">
-	    			<h6><b>Total:</b></h6>
-	    		</div>
-	    		<div class="col s1">
-	    			<h6>{{sale.total | currency}}</h6>
-	    		</div>
-	    		<div class="col offset-s5 s3">
+          <a
+            class="btn-floating btn-small waves-effect waves-light black"
+            (click)="add_row()"
+            ><i class="material-icons">add</i></a
+          >
+        </tr>
+      </thead>
 
-	    			<button class="waves-effect waves-light black btn" (click)="save()">Guardar venta</button> 
-	    		</div>
-	    	</div>
-	</div>
+      <tbody>
+        <tr *ngFor="let item of sale.items; index as i">
+          <td
+            [textContent]="sale.items[i].quantity"
+            (blur)="updateAmount($event, i)"
+            contenteditable="true"
+          ></td>
+          <td
+            [textContent]="sale.items[i].product_id"
+            (blur)="productLookUp($event, i)"
+            contenteditable="true"
+          ></td>
+          <td>{{ item.product_name }}</td>
+          <td>{{ item.price / 100 | currency }}</td>
+          <td>{{ item.itemDiscount / 100 | currency }}</td>
+          <td>{{ item.itemSubtotal / 100 | currency }}</td>
+          <td>{{ item.amount / 100 | currency }}</td>
+          <td>
+            <mat-checkbox
+              name="item.isBulk"
+              [(ngModel)]="item.isBulk"
+              (click)="productLookUp($event, i)"
+              required
+            ></mat-checkbox
+            >{{ item.isBulk ? "X" : "#" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="row">
+      <div class="col offset-s8 s2">
+        <h6><b>Subtotal:</b></h6>
+      </div>
+      <div class="col s1">
+        <h6>{{ sale.subtotal / 100 | currency }}</h6>
+      </div>
+      <div class="col offset-s8 s2">
+        <h6><b>IVA:</b></h6>
+      </div>
+      <div class="col s1">
+        <h6>{{ sale.tax / 100 | currency }}</h6>
+      </div>
+      <div class="col offset-s8 s2">
+        <h6><b>Total:</b></h6>
+      </div>
+      <div class="col s1">
+        <h6>{{ sale.total / 100 | currency }}</h6>
+      </div>
+      <div class="col offset-s5 s3">
+        <button class="waves-effect waves-light black btn" (click)="save()">
+          Guardar venta
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 <ng-template #successDialog>
-    <h5 mat-dialog-title>Venta Guardada Exitosamente</h5>
-    <mat-dialog-actions align="center">
-        <button class="waves-effect centered  center-align waves-light black btn" matDialogClose="Continuar" (click)= backToParent()>Continuar</button>
-    </mat-dialog-actions>
+  <h5 mat-dialog-title>Venta Guardada Exitosamente</h5>
+  <mat-dialog-actions align="center">
+    <button
+      class="waves-effect centered center-align waves-light black btn"
+      matDialogClose="Continuar"
+      (click)="backToParent()"
+    >
+      Continuar
+    </button>
+  </mat-dialog-actions>
 </ng-template>
 
 <ng-template #failureDialog>
-    <h5 mat-dialog-title>No se pudo guardar la venta</h5>
-    <mat-dialog-actions align="center">
-        <button class="waves-effect centered  center-align waves-light black btn" matDialogClose="Continuar">Continuar</button>
-    </mat-dialog-actions>
+  <h5 mat-dialog-title>No se pudo guardar la venta</h5>
+  <mat-dialog-actions align="center">
+    <button
+      class="waves-effect centered center-align waves-light black btn"
+      matDialogClose="Continuar"
+    >
+      Continuar
+    </button>
+  </mat-dialog-actions>
 </ng-template>
 
 <ng-template #incompleteDialog>
-    <h5 mat-dialog-title>Por favor llene todos los campos correctamente</h5>
-    <mat-dialog-actions align="center">
-        <button class="waves-effect centered  center-align waves-light black btn" matDialogClose="Continuar">Continuar</button>
-    </mat-dialog-actions>
+  <h5 mat-dialog-title>Por favor llene todos los campos correctamente</h5>
+  <mat-dialog-actions align="center">
+    <button
+      class="waves-effect centered center-align waves-light black btn"
+      matDialogClose="Continuar"
+    >
+      Continuar
+    </button>
+  </mat-dialog-actions>
 </ng-template>

@@ -25,20 +25,10 @@
         <td style="text-align: center;">{{ product.id }}</td>
         <td style="text-align: center;">{{ product.name }}</td>
         <td style="text-align: center;">
-          {{
-            (product.price / 100).toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD"
-            })
-          }}
+          {{ product.price / 100 | currency }}
         </td>
         <td style="text-align: center;">
-          {{
-            (product.bulkPrice / 100).toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD"
-            })
-          }}
+          {{ product.bulkPrice / 100 | currency }}
         </td>
         <td style="text-align: center;">
           <mat-icon>{{ product.isPrime ? "check" : "close" }}</mat-icon>

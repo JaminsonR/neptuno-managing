@@ -3,7 +3,7 @@ export class Product {
   id: string;
   name: string;
   price: number;
-  bulkPrice: Number;
+  bulkPrice: number;
   isTaxable: boolean;
   stock: number;
   isPrime: boolean;

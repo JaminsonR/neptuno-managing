@@ -40,13 +40,17 @@ export class VentaComponent implements OnInit {
         quantity: 0,
         product_id: " ",
         product_name: " ",
-        price: 0.0,
-        amount: 0.0,
+        price: 0,
+        itemDiscount: 0,
+        itemSubtotal: 0,
+        amount: 0,
+        isBulk: true,
       },
     ],
-    subtotal: 0.0,
-    tax: 0.0,
-    total: 0.0,
+    subtotal: 0,
+    tax: 0,
+    discount: 0,
+    total: 0,
     status: "",
     due_date: "",
   };
@@ -148,7 +152,9 @@ export class VentaComponent implements OnInit {
   }
 
   productLookUp(event: any, i: number): void {
-    let id = event.target.innerText.replace(/\s/g, "");
+    //let id = event.target.innerText.replace(/\s/g, "");
+    console.log(this.sale.items[i]);
+    let id = this.sale.items[i].product_id.replace(/\s/g, "");
     for (var product of this.products) {
       if (product.id === id) {
         if (!this.sale.items[i].quantity) {
@@ -159,11 +165,11 @@ export class VentaComponent implements OnInit {
           ""
         );
         this.sale.items[i].product_name = product.name;
-        this.sale.items[i].price = product.price;
+        this.sale.items[i].price = this.sale.items[i].isBulk
+          ? product.bulkPrice
+          : product.price;
         this.sale.items[i].amount = Number(
-          Big(this.sale.items[i].quantity)
-            .times(this.sale.items[i].price)
-            .toString()
+          this.sale.items[i].quantity * this.sale.items[i].price
         );
         this.updateTotals();
         return;
@@ -172,37 +178,36 @@ export class VentaComponent implements OnInit {
     this.sale.items[i].product_name = " ";
     this.sale.items[i].price = 0.0;
   }
+
   updateAmount(event: any, i: number): void {
     let quantity = event.target.innerText.replace(/\s/g, "");
     if (!this.sale.items[i].price) {
-      this.sale.items[i].price = 0.0;
+      this.sale.items[i].price = 0;
     }
 
     this.sale.items[i].quantity = quantity;
-    this.sale.items[i].amount = Number(
-      Big(quantity).times(this.sale.items[i].price).toString()
-    );
+    this.sale.items[i].amount = Number(quantity * this.sale.items[i].price);
     this.updateTotals();
   }
   updateTotals(): void {
-    let subtotal: Big = Big(0.0);
-    let tax_subtotal: Big = Big(0.0);
-    let tax: Big = Big(0.0);
-    let total: Big = Big(0.0);
+    let subtotal: number = 0;
+    let tax_subtotal: number = 0;
+    let tax: number = 0;
+    let total: number = 0;
     for (let item of this.sale.items) {
-      subtotal = Big(item.amount).plus(subtotal);
+      subtotal = item.amount + subtotal;
       let prod = this.products.find(function (product) {
         return product.id === item.product_id;
       });
       if (prod && prod.isTaxable) {
-        tax_subtotal = Big(item.amount).plus(tax_subtotal);
+        tax_subtotal = item.amount + tax_subtotal;
       }
     }
-    tax = tax_subtotal.times(this.TAX);
-    total = subtotal.plus(tax);
-    this.sale.subtotal = Number(subtotal.toString());
-    this.sale.tax = Number(tax.toString());
-    this.sale.total = Number(total.toString());
+    tax = tax_subtotal * this.TAX;
+    total = subtotal + tax;
+    this.sale.subtotal = subtotal;
+    this.sale.tax = tax;
+    this.sale.total = total;
   }
 
   ngOnInit() {
