@@ -1,41 +1,51 @@
 <app-navbar></app-navbar>
 <div *ngIf="showResumen" class="container">
-	<div class="card z-depth-1">
-		<div class="row">
-			<div class="col s12">
-				<h2 class="center-align">Resumen de Ventas</h2>
-    		</div>
-    	</div>
-    	<section class="container">
-    		<div class="row">
-				<div class="input-field col s5">
-		          <input [(ngModel)]="search" id="search" type="text" (input)="clientLookUp($event) ">
-		          <label for="search">Buscar</label>
-		        </div>
-	    	</div>
-    		  <table class="centered responsive-table highlight">
-		        <thead>
-		          <tr>
-		              <th *ngFor="let column of displayedColumns" [textContent]=column></th>
-		              <a class="btn-floating btn-small waves-effect waves-light black" (click)="newSale()"><i class="material-icons">add</i></a>
-		          </tr>
-		        </thead>
+  <div class="card z-depth-1">
+    <div class="row">
+      <div class="col s12">
+        <h2 class="center-align">Resumen de Ventas</h2>
+      </div>
+    </div>
+    <section class="container">
+      <div class="row">
+        <div class="input-field col s5">
+          <input
+            [(ngModel)]="search"
+            id="search"
+            type="text"
+            (input)="clientLookUp($event)"
+          />
+          <label for="search">Buscar</label>
+        </div>
+      </div>
+      <table class="centered responsive-table highlight">
+        <thead>
+          <tr>
+            <th
+              *ngFor="let column of displayedColumns"
+              [textContent]="column"
+            ></th>
+            <a
+              class="btn-floating btn-small waves-effect waves-light black"
+              (click)="newSale()"
+              ><i class="material-icons">add</i></a
+            >
+          </tr>
+        </thead>
 
-		        <tbody>
-		        	<tr *ngFor="let sale of ELEMENT_DATA ; index as i" (click)=select(i)>
-		        		 
-			            <td>{{sale.client_id}}</td>
-			            <td>{{sale.client_name}}</td>
-			            <td> {{sale.total | currency}}</td>
-						<td> {{sale.date | date}}</td>
-						<td> {{sale.status }}</td>
-						<td> {{sale.due_date | date }}</td>
-			        
-		         	</tr>
-		        </tbody>
-	    	</table>
-		</section>
-	</div>
+        <tbody>
+          <tr *ngFor="let sale of ELEMENT_DATA; index as i" (click)="select(i)">
+            <td>{{ sale.client_id }}</td>
+            <td>{{ sale.client_name }}</td>
+            <td>{{ sale.total / 100 | currency }}</td>
+            <td>{{ sale.date | date }}</td>
+            <td>{{ sale.status }}</td>
+            <td>{{ sale.due_date | date }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
 </div>
 
 <app-detalle-venta [sale]="selectedSale"></app-detalle-venta>

@@ -10,7 +10,7 @@ import { InventarioCrearComponent } from "./inventario-crear/inventario-crear.co
 @Component({
   selector: "app-inventario",
   templateUrl: "./inventario.component.html",
-  styleUrls: ["./inventario.component.css"]
+  styleUrls: ["./inventario.component.css"],
 })
 export class InventarioComponent implements OnInit {
   products: Product[];
@@ -20,9 +20,9 @@ export class InventarioComponent implements OnInit {
     "price",
     "stock",
     "isPrime",
-    "taxable",
+    "isTaxable",
     "existence",
-    "delete"
+    "delete",
   ];
   dataSource = new MatTableDataSource();
   @ViewChild(MatSort) sort: MatSort;
@@ -33,11 +33,11 @@ export class InventarioComponent implements OnInit {
 
   getProductos(): void {
     this.productosService.getProducts().subscribe(
-      response => {
+      (response) => {
         this.products = response.data;
         this.dataSource = new MatTableDataSource(this.products);
       },
-      error => {}
+      (error) => {}
     );
   }
 
@@ -56,9 +56,9 @@ export class InventarioComponent implements OnInit {
 
   openModifyDialog(product): void {
     const dialogRef = this.dialog.open(InventarioCrearComponent, {
-      data: product
+      data: product,
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(result);
       if (result) {
         console.log(result);
@@ -76,7 +76,7 @@ export class InventarioComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(InventarioCrearComponent, null);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.products.unshift(result);
         this.dataSource = new MatTableDataSource(this.products);

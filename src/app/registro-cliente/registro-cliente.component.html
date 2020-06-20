@@ -19,6 +19,7 @@
               id="email"
               [(ngModel)]="client.client_email"
               name="client.client_email"
+              (input)="forceLowerCase()"
               type="email"
               class="validate"
             />

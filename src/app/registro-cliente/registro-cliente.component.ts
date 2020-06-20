@@ -31,6 +31,8 @@ export class RegistroClienteComponent implements OnInit {
       .createClient(this.client)
       .subscribe(() => this.goBack());
   }
-
+  forceLowerCase(): void {
+    this.client.client_email = this.client.client_email.toLowerCase();
+  }
   ngOnInit() {}
 }

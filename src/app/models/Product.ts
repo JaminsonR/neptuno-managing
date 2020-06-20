@@ -1,10 +1,10 @@
-export class Product
-{
-	// _id : any ;
+export class Product {
+  // _id : any ;
   id: string;
   name: string;
   price: number;
-  taxable: boolean;
+  bulkPrice: number;
+  isTaxable: boolean;
   stock: number;
   isPrime: boolean;
 }
