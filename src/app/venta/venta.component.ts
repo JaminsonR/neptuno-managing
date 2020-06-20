@@ -162,11 +162,17 @@ export class VentaComponent implements OnInit {
   }
 
   productLookUp(event: any, i: number): void {
-    let id = this.sale.items[i].product_id.replace(/\s/g, "");
-
     // force upper case
-    this.sale.items[i].product_id = this.sale.items[i].product_id.toUpperCase();
+    this.sale.items[i].product_id = this.sale.items[i].product_id
+      .toUpperCase()
+      .replace(/\s/g, "");
+
+    let id = this.sale.items[i].product_id;
+    console.log(this.sale.items[i].product_id);
     for (var product of this.products) {
+      console.log(product.id);
+      console.log(id);
+      console.log("-----");
       if (product.id === id) {
         if (!this.sale.items[i].quantity) {
           this.sale.items[i].quantity = 0.0;
