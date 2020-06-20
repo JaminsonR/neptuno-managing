@@ -10,7 +10,7 @@ export class Sale {
   items: Item[];
   subtotal: number;
   tax: number;
-  discount: number;
+  discount: number; // percentage
   total: number;
   status: string;
   due_date: string;

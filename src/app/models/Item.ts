@@ -4,7 +4,7 @@ export class Item {
   product_name: string;
   price: number;
   itemDiscount: number;
-  itemSubtotal: number;
+  itemSubtotal: number; // cents
   amount: number;
   isBulk: boolean;
 }
