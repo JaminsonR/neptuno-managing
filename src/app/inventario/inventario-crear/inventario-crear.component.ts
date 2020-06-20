@@ -24,6 +24,8 @@ export class InventarioCrearComponent implements OnInit {
     stock: null,
     isPrime: false,
   };
+  price: number;
+  bulkPrice: number;
   // dataSource = new MatTableDataSource(product);
   constructor(
     private productosService: ProductosService,
@@ -44,9 +46,22 @@ export class InventarioCrearComponent implements OnInit {
       verticalPosition: "top",
     });
   }
+  updateBulkPrice(): void {
+    this.product.bulkPrice = Math.round(
+      parseFloat(String(this.bulkPrice)) * 100
+    );
+  }
 
+  updatePrice(): void {
+    this.product.price = Math.round(parseFloat(String(this.price)) * 100);
+  }
+
+  forceUpperCase(): void {
+    this.product.id = this.product.id.toUpperCase();
+  }
   createProduct(): void {
     // FIXME: validar que el codigo sea unico y mostrar mensaje de error
+    // Math.round(parseFloat(this.perItemDiscount[i]) * 100);
     if (this.data) {
       console.log(this.product); // FIXME: algo raro pasa aqui
       this.productosService.updateProduct(this.data).subscribe(

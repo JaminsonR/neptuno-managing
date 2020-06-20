@@ -6,7 +6,6 @@ import {
   TemplateRef,
   ViewChild,
 } from "@angular/core";
-import { Big } from "big.js";
 import * as moment from "moment";
 import { Sale } from "../models/Sale";
 import { Item } from "../models/Item";
@@ -15,7 +14,7 @@ import { ClientesService } from "../services/clientesService/clientes.service";
 import { ProductosService } from "../services/productosService/producto.service";
 import { Client } from "../models/Client";
 import { Product } from "../models/Product";
-import { MatDialog, MatDialogRef } from "@angular/material";
+import { MatDialog } from "@angular/material";
 
 @Component({
   selector: "app-venta",
@@ -27,7 +26,15 @@ export class VentaComponent implements OnInit {
   @ViewChild("failureDialog") failureDialog: TemplateRef<any>;
   @ViewChild("incompleteDialog") incompleteDialog: TemplateRef<any>;
 
+  // user input values
+  perItemDiscount: string[] = ["0.00"];
+  itemQuantities: string[] = ["0"];
+  discount: string = "0";
+
+  calculatedDiscount: number = 0;
   TAX = 0.12;
+
+  // model bound values
   sale: Sale = {
     _id: undefined,
     client_id: " ",
@@ -44,7 +51,7 @@ export class VentaComponent implements OnInit {
         itemDiscount: 0,
         itemSubtotal: 0,
         amount: 0,
-        isBulk: true,
+        isBulk: false,
       },
     ],
     subtotal: 0,
@@ -73,6 +80,7 @@ export class VentaComponent implements OnInit {
       item.quantity = 0;
       item.amount = 0;
       this.sale.items.push(item);
+      this.perItemDiscount.push("0.00");
     }
   };
   openDialog(dialog: TemplateRef<any>) {
@@ -115,10 +123,12 @@ export class VentaComponent implements OnInit {
             this.openDialog(this.successDialog);
           } else {
             this.openDialog(this.failureDialog);
+            console.log(response);
           }
         },
         (error) => {
           this.openDialog(this.failureDialog);
+          console.log(error);
         }
       );
       return;
@@ -152,18 +162,15 @@ export class VentaComponent implements OnInit {
   }
 
   productLookUp(event: any, i: number): void {
-    //let id = event.target.innerText.replace(/\s/g, "");
-    console.log(this.sale.items[i]);
     let id = this.sale.items[i].product_id.replace(/\s/g, "");
+
+    // force upper case
+    this.sale.items[i].product_id = this.sale.items[i].product_id.toUpperCase();
     for (var product of this.products) {
       if (product.id === id) {
         if (!this.sale.items[i].quantity) {
           this.sale.items[i].quantity = 0.0;
         }
-        this.sale.items[i].product_id = event.target.innerText.replace(
-          /\s/g,
-          ""
-        );
         this.sale.items[i].product_name = product.name;
         this.sale.items[i].price = this.sale.items[i].isBulk
           ? product.bulkPrice
@@ -171,22 +178,76 @@ export class VentaComponent implements OnInit {
         this.sale.items[i].amount = Number(
           this.sale.items[i].quantity * this.sale.items[i].price
         );
+        this.updateAmount(event, i);
         this.updateTotals();
+
         return;
       }
     }
     this.sale.items[i].product_name = " ";
     this.sale.items[i].price = 0.0;
   }
-
+  perItemDiscountInit(event: any, i: number) {
+    // if field is empty we initialize with 0.00
+    if (this.perItemDiscount[i].replace(/\s/g, "") == "") {
+      this.perItemDiscount[i] = "0.00";
+    }
+    this.updateAmount(event, i);
+    this.updateTotals();
+  }
+  clearItemDiscount(event: any, i: number) {
+    // clear field if user focus it
+    this.perItemDiscount[i] = "";
+    this.sale.items[i].itemDiscount = 0;
+    this.updateAmount(event, i);
+    this.updateTotals();
+  }
+  discountInit() {
+    // if field is empty we initialize with 0.00
+    if (this.discount.replace(/\s/g, "") == "") {
+      this.discount = "0";
+    }
+    this.updateTotals();
+  }
+  clearDiscount() {
+    // clear field if user focus it
+    this.discount = "";
+    this.sale.discount = 0;
+    this.updateTotals();
+  }
+  clearQuantity(event: any, i: number) {
+    // clear field if user focus it
+    this.itemQuantities[i] = "";
+    this.updateAmount(event, i);
+    this.updateTotals();
+  }
+  quantityInit(event: any, i: number) {
+    // if field is empty we initialize with 0
+    if (this.itemQuantities[i] == "") {
+      this.itemQuantities[i] = "0";
+    }
+    this.updateAmount(event, i);
+    this.updateTotals();
+  }
   updateAmount(event: any, i: number): void {
-    let quantity = event.target.innerText.replace(/\s/g, "");
+    // updates the itemSubtotal, itemDiscount and itemAmount values
+    let quantity = Number(this.itemQuantities[i]);
+
     if (!this.sale.items[i].price) {
       this.sale.items[i].price = 0;
+      this.sale.items[i].itemDiscount = 0;
     }
+    // copy user input discount to model discount
+    this.sale.items[i].itemDiscount = Math.round(
+      parseFloat(String(Number(this.perItemDiscount[i]))) * 100
+    );
 
     this.sale.items[i].quantity = quantity;
-    this.sale.items[i].amount = Number(quantity * this.sale.items[i].price);
+
+    this.sale.items[i].itemSubtotal = quantity * this.sale.items[i].price;
+
+    this.sale.items[i].amount =
+      quantity * (this.sale.items[i].price - this.sale.items[i].itemDiscount);
     this.updateTotals();
   }
   updateTotals(): void {
@@ -194,6 +255,10 @@ export class VentaComponent implements OnInit {
     let tax_subtotal: number = 0;
     let tax: number = 0;
     let total: number = 0;
+
+    // updating discount
+    this.sale.discount = Math.round(parseFloat(String(Number(this.discount))));
+
     for (let item of this.sale.items) {
       subtotal = item.amount + subtotal;
       let prod = this.products.find(function (product) {
@@ -203,8 +268,12 @@ export class VentaComponent implements OnInit {
         tax_subtotal = item.amount + tax_subtotal;
       }
     }
+    //tax_subtotal = the sum of taxable item values
     tax = tax_subtotal * this.TAX;
-    total = subtotal + tax;
+    console.log(this.sale.discount); //String(Number(
+    this.calculatedDiscount = subtotal * (this.sale.discount / 100);
+    total = subtotal + tax - this.calculatedDiscount;
+
     this.sale.subtotal = subtotal;
     this.sale.tax = tax;
     this.sale.total = total;

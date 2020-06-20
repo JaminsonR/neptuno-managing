@@ -13,7 +13,7 @@
           id="client_id"
           type="text"
           class="validate"
-          (blur)="clientLookUp($event)"
+          (input)="clientLookUp($event)"
         />
         <label class="active" for="client_id">RUC del cliente</label>
       </div>
@@ -108,7 +108,6 @@
           <th>Subtotal</th>
           <th>Descuento</th>
           <th>Importe</th>
-          <th>Mayorista</th>
 
           <a
             class="btn-floating btn-small waves-effect waves-light black"
@@ -120,47 +119,90 @@
 
       <tbody>
         <tr *ngFor="let item of sale.items; index as i">
-          <td
-            [textContent]="sale.items[i].quantity"
-            (blur)="updateAmount($event, i)"
-            contenteditable="true"
-          ></td>
-          <td
-            [textContent]="sale.items[i].product_id"
-            (blur)="productLookUp($event, i)"
-            contenteditable="true"
-          ></td>
+          <td>
+            <input
+              matInput
+              style="text-align: center;"
+              [(ngModel)]="itemQuantities[i]"
+              (focusin)="clearQuantity($event, i)"
+              type="text"
+              (input)="updateAmount($event, i)"
+              (focusout)="quantityInit($event, i)"
+              class="validate"
+            />
+          </td>
+          <td>
+            <input
+              matInput
+              style="text-align: center;"
+              [(ngModel)]="sale.items[i].product_id"
+              type="text"
+              (input)="productLookUp($event, i)"
+              class="validate"
+            />
+          </td>
           <td>{{ item.product_name }}</td>
           <td>{{ item.price / 100 | currency }}</td>
-          <td>{{ item.itemDiscount / 100 | currency }}</td>
+
           <td>{{ item.itemSubtotal / 100 | currency }}</td>
-          <td>{{ item.amount / 100 | currency }}</td>
+
           <td>
-            <mat-checkbox
-              name="item.isBulk"
-              [(ngModel)]="item.isBulk"
-              (click)="productLookUp($event, i)"
-              required
-            ></mat-checkbox
-            >{{ item.isBulk ? "X" : "#" }}
+            <input
+              matInput
+              style="text-align: center;"
+              [(ngModel)]="perItemDiscount[i]"
+              type="text"
+              (input)="updateAmount($event, i)"
+              (focusout)="perItemDiscountInit($event, i)"
+              (focusin)="clearItemDiscount($event, i)"
+              class="validate"
+            />
           </td>
+          <td>{{ item.amount / 100 | currency }}</td>
         </tr>
       </tbody>
     </table>
 
     <div class="row">
+      <!-- subtotal -->
       <div class="col offset-s8 s2">
         <h6><b>Subtotal:</b></h6>
       </div>
       <div class="col s1">
         <h6>{{ sale.subtotal / 100 | currency }}</h6>
       </div>
+      <!--applied discount-->
+      <div class="col offset-s8 s2">
+        <h6><b>Aplicar Descuento (%):</b></h6>
+      </div>
+      <div class="col s1">
+        <input
+          matInput
+          #itemDiscount
+          style="text-align: center;"
+          [(ngModel)]="discount"
+          type="text"
+          (input)="updateTotals()"
+          (focusout)="discountInit()"
+          (focusin)="clearDiscount()"
+          class="validate"
+        />
+      </div>
+      <!-- discount -->
+      <div class="col offset-s8 s2">
+        <h6><b>Descuento:</b></h6>
+      </div>
+      <div class="col s1">
+        <h6 style="color: red;">-{{ calculatedDiscount / 100 | currency }}</h6>
+      </div>
+      <!-- tax-->
       <div class="col offset-s8 s2">
         <h6><b>IVA:</b></h6>
       </div>
       <div class="col s1">
         <h6>{{ sale.tax / 100 | currency }}</h6>
       </div>
+      <!-- total -->
       <div class="col offset-s8 s2">
         <h6><b>Total:</b></h6>
       </div>

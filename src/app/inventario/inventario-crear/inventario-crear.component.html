@@ -9,6 +9,7 @@
             class="validate"
             [(ngModel)]="product.id"
             name="product.id"
+            (input)="forceUpperCase()"
             required
           />
           <label>Código</label>
@@ -30,8 +31,9 @@
             matInput
             type="number"
             class="validate"
-            [(ngModel)]="product.price"
-            name="product.price"
+            (input)="updatePrice()"
+            [(ngModel)]="price"
+            name="price"
             required
             min="0.0"
           />
@@ -42,8 +44,9 @@
             matInput
             type="number"
             class="validate"
-            [(ngModel)]="product.bulkPrice"
-            name="product.bulkPrice"
+            [(ngModel)]="bulkPrice"
+            (input)="updateBulkPrice()"
+            name="bulkPrice"
             required
             min="0.0"
           />
